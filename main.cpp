@@ -61,7 +61,7 @@ int update_game(int action)
     switch(action)
     {
         case GO_UP:     break;
-        case GO_LEFT:   break;            
+        case GO_LEFT:   break;
         case GO_DOWN:   break;
         case GO_RIGHT:  break;
         case ACTION_BUTTON: break;
@@ -192,13 +192,13 @@ int main()
         // Timer to measure game update speed
         Timer t; t.start();
         
-        // Actuall do the game update:
+        // Actually do the game update:
         // 1. Read inputs        
         // 2. Determine action (get_action)        
         // 3. Update game (update_game)
         // 3b. Check for game over
         // 4. Draw frame (draw_game)
-        
+        draw_game(true);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();
