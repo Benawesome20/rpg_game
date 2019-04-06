@@ -102,7 +102,7 @@ MapItem* get_north(int x, int y)
     // Check if there is no northern tile
     if(y <= 0)
         return NULL;
-    return getItem(map.items, map_hash(XY_KEY(x, y - 1)));
+    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y - 1)));
 }
 
 MapItem* get_south(int x, int y)
@@ -110,7 +110,7 @@ MapItem* get_south(int x, int y)
     // Check if there is no southern tile
     if(y >= map.h - 1)
         return NULL;
-    return getItem(map.items, map_hash(XY_KEY(x, y + 1)));
+    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y + 1)));
 }
 
 MapItem* get_east(int x, int y)
@@ -118,7 +118,7 @@ MapItem* get_east(int x, int y)
     // Check if there is no eastern tile
     if(x >= map.w - 1)
         return NULL;
-    return getItem(map.items, map_hash(XY_KEY(x + 1, y)));
+    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x + 1, y)));
 }
 
 MapItem* get_west(int x, int y)
@@ -126,14 +126,14 @@ MapItem* get_west(int x, int y)
     // Check if there is no western tile
     if(x <= 0)
         return NULL;
-    return getItem(map.items, map_hash(XY_KEY(x - 1, y)));
+    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x - 1, y)));
 }
 
 MapItem* get_here(int x, int y)
 {
     // Check if tile is on map
     if(x > -1 && x < map.w && y > -1 && y < map.h)
-        return getItem(map.items, map_hash(XY_KEY(x, y)));
+        return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y)));
     else
         return NULL;
 }
