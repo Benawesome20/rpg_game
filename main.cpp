@@ -198,13 +198,11 @@ int main()
         // 1. Read inputs
         in = read_inputs();
         pc.printf("X: %d, Y: %d, Z: %d\r\n", in.ax, in.ay, in.az);
-        pc.printf("B1: %u, B2: %u, B3: %u\r\n", in.b1, in.b2, in.b3);
 
         // 2. Determine action (get_action)
         // 3. Update game (update_game)
         // 3b. Check for game over
         // 4. Draw frame (draw_game)
-        draw_game(false);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();
