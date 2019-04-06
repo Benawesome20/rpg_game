@@ -26,7 +26,7 @@ int hardware_init()
 {
     // Crank up the speed
     uLCD.baudrate(3000000);
-    pc.baud(115200);
+   // pc.baud(115200);
         
     //Initialize pushbuttons
     button1.mode(PullUp); 
