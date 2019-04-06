@@ -45,7 +45,12 @@ GameInputs read_inputs()
     in.b2 = button2.read();
     in.b3 = button3.read();
 
-    ASSERT_P(acc.readXYZGravity(&in.ax, &in.ay, &in.az) == ERROR_NONE, "Accelerometer reading failed!");
+    double x,y,z
 
+    ASSERT_P(acc.readXYZGravity(&x, &y, &z) == ERROR_NONE, "Accelerometer reading failed!");
+
+    in.ax = x;
+    in.ay = y;
+    in.az = z;
     return in;
 }
