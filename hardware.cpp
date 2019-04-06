@@ -32,7 +32,9 @@ int hardware_init()
     button1.mode(PullUp); 
     button2.mode(PullUp);
     button3.mode(PullUp);
-    
+
+    acc.activate();
+
     return ERROR_NONE;
 }
 
@@ -45,7 +47,7 @@ GameInputs read_inputs()
     in.b2 = button2.read();
     in.b3 = button3.read();
 
-    ASSERT_P(acc.readXYZCounts(&in.ax, &in.ay, &in.az) == ERROR_NONE, "Accelerometer reading failed!");
+    ASSERT_P(acc.readXYZGravity(&in.ax, &in.ay, &in.az) == ERROR_NONE, "Accelerometer reading failed!");
 
     return in;
 }
