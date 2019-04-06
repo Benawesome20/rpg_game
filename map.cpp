@@ -3,6 +3,10 @@
 #include "globals.h"
 #include "graphics.h"
 
+#define MAP_WIDTH 50
+#define MAP_HEIGHT 50
+#define NUM_TILES MAP_WIDTH*MAP_HEIGHT
+
 /**
  * The Map structure. This holds a HashTable for all the MapItems, along with
  * values for the width and height of the Map.
@@ -26,7 +30,9 @@ static int active_map;
  * This function should uniquely map (x,y) onto the space of unsigned integers.
  */
 static unsigned XY_KEY(int X, int Y) {
-    // TODO: Fix me!
+    // Cantor's Pairing Function
+    unsigned mapped = (X + Y)*(X + Y + 1)/2 + Y;
+    return mapped;
 }
 
 /**
@@ -36,14 +42,16 @@ static unsigned XY_KEY(int X, int Y) {
  */
 unsigned map_hash(unsigned key)
 {
-    // TODO: Fix me!
+    unsigned hash_value = key % (NUM_TILES);
 }
 
 void maps_init()
 {
-    // TODO: Implement!    
     // Initialize hash table
+    map.items = createHashTable(hash, NUM_TILES);
     // Set width & height
+    map.w = MAP_WIDTH;
+    map.h = MAP_HEIGHT;
 }
 
 Map* get_active_map()
@@ -76,39 +84,64 @@ void print_map()
 
 int map_width()
 {
+    return map.w;
 }
 
 int map_height()
 {
+    return map.h;
 }
 
 int map_area()
 {
+    return map.w * map.h;
 }
 
 MapItem* get_north(int x, int y)
 {
+    // Check if there is no northern tile
+    if(y <= 0)
+        return NULL;
+    return getItem(map.items, map_hash(XY_KEY(x, y - 1)));
 }
 
 MapItem* get_south(int x, int y)
 {
+    // Check if there is no southern tile
+    if(y >= map.h - 1)
+        return NULL;
+    return getItem(map.items, map_hash(XY_KEY(x, y + 1)));
 }
 
 MapItem* get_east(int x, int y)
 {
+    // Check if there is no eastern tile
+    if(x >= map.w - 1)
+        return NULL;
+    return getItem(map.items, map_hash(XY_KEY(x + 1, y)));
 }
 
 MapItem* get_west(int x, int y)
 {
+    // Check if there is no western tile
+    if(x <= 0)
+        return NULL;
+    return getItem(map.items, map_hash(XY_KEY(x - 1, y)));
 }
 
 MapItem* get_here(int x, int y)
 {
+    // Check if tile is on map
+    if(x > -1 && x < map.w && y > -1 && y < map.h)
+        return getItem(map.items, map_hash(XY_KEY(x, y)));
+    else
+        return NULL;
 }
 
 
 void map_erase(int x, int y)
 {
+    deleteItem(map.items, map_hash(XY_KEY(x, y)));
 }
 
 void add_wall(int x, int y, int dir, int len)
