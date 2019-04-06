@@ -197,7 +197,7 @@ int main()
         // Actually do the game update:
         // 1. Read inputs
         in = read_inputs();
-        pc.printf("X: %d,Y: %d, Z: %d", in.ax, in.ay, in.az);
+        pc.printf("X: %d,Y: %d, Z: %d\n", in.ax, in.ay, in.az);
 
         // 2. Determine action (get_action)
         // 3. Update game (update_game)
