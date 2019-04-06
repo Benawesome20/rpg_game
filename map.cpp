@@ -48,7 +48,7 @@ unsigned map_hash(unsigned key)
 void maps_init()
 {
     // Initialize hash table
-    map.items = createHashTable(hash, NUM_TILES);
+    map.items = createHashTable(map_hash, NUM_TILES);
     // Set width & height
     map.w = MAP_WIDTH;
     map.h = MAP_HEIGHT;
