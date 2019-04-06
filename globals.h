@@ -36,5 +36,6 @@ extern wave_player waver;
 // === [error code] ===
 #define ERROR_NONE 0 // All good in the hood
 #define ERROR_MEH -1 // This is how errors are done
+#define ERROR_READ 1 // Error for reading inputs
 
 #endif //GLOBAL_H

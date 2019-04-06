@@ -16,7 +16,7 @@ struct GameInputs {
 int hardware_init();
 
 /**
- * Read all the user inputs. 
+ * Read all the user inputs.
  * This is all input hardware interaction should happen.
  * Returns a GameInputs struct that has all the inputs recorded.
  * This GameInputs is used elsewhere to compute the game update.

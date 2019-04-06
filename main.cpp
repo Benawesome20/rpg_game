@@ -178,10 +178,12 @@ int main()
     // Initialize the maps
     maps_init();
     init_main_map();
-    
+
     // Initialize game state
     set_active_map(0);
     Player.x = Player.y = 5;
+
+    GameInputs in;
 
     // Initial drawing
     draw_game(true);
@@ -191,10 +193,13 @@ int main()
     {
         // Timer to measure game update speed
         Timer t; t.start();
-        
+
         // Actually do the game update:
-        // 1. Read inputs        
-        // 2. Determine action (get_action)        
+        // 1. Read inputs
+        in = read_inputs();
+        pc.printf("X: %d,Y: %d, Z: %d", in.ax, in.ay, in.az);
+
+        // 2. Determine action (get_action)
         // 3. Update game (update_game)
         // 3b. Check for game over
         // 4. Draw frame (draw_game)

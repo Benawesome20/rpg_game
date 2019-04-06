@@ -39,5 +39,13 @@ int hardware_init()
 GameInputs read_inputs() 
 {
     GameInputs in;
+
+    // Read the values and store them in in
+    in.b1 = button1.read();
+    in.b2 = button2.read();
+    in.b3 = button3.read();
+
+    ASSERT_P(readXYZGravity(&in.ax, &in.ay, &in.az) == ERROR_READ, "Accelerometer reading failed!");
+
     return in;
 }
