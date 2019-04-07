@@ -44,7 +44,7 @@ int get_action(GameInputs inputs)
     else if(inputs.b2)
         return MENU_BUTTON;
     // If x and y axes are within a certain bound, do not move
-    else if(x < NO_ACTION_LIMIT && y < NO_ACTION_LIMIT)
+    else if(inputs.ax < NO_ACTION_LIMIT && inputs.ay < NO_ACTION_LIMIT)
         return NO_ACTION;
     // Otherwise, move in the direction of the greatest axis value
     else if(inputs.ax > inputs.ay){
