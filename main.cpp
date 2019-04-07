@@ -13,7 +13,7 @@ void init_main_map ();
 int main ();
 
 // Constants
-#define NO_ACTION_LIMIT 50
+#define NO_ACTION_LIMIT 200
 
 /**
  * The main game state. Must include Player locations and previous locations for
