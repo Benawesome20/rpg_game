@@ -39,9 +39,9 @@ struct {
 int get_action(GameInputs inputs)
 {
     // Check for button presses first
-    if(inputs.b1)
+    if(!inputs.b1)
         return ACTION_BUTTON;
-    else if(inputs.b2)
+    else if(!inputs.b2)
         return MENU_BUTTON;
     // If x and y axes are within a certain bound, do not move
     else if(inputs.ax < NO_ACTION_LIMIT && inputs.ay < NO_ACTION_LIMIT)
