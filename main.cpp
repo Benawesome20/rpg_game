@@ -12,6 +12,9 @@ void draw_game (int init);
 void init_main_map ();
 int main ();
 
+// Constants
+#define NO_ACTION_LIMIT 50
+
 /**
  * The main game state. Must include Player locations and previous locations for
  * drawing to work properly. Other items can be added as needed.
@@ -24,7 +27,7 @@ struct {
 
 /**
  * Given the game inputs, determine what kind of update needs to happen.
- * Possbile return values are defined below.
+ * Possible return values are defined below.
  */
 #define NO_ACTION 0
 #define ACTION_BUTTON 1
@@ -35,14 +38,26 @@ struct {
 #define GO_DOWN 6
 int get_action(GameInputs inputs)
 {
-    return NO_ACTION;
+    // Check for button presses first
+    if(inputs.b1)
+        return ACTION_BUTTON;
+    else if(inputs.b2)
+        return MENU_BUTTON;
+    // If x and y axes are within a certain bound, do not move
+    else if(x < NO_ACTION_LIMIT && y < NO_ACTION_LIMIT)
+        return NO_ACTION;
+    // Otherwise, move in the direction of the greatest axis value
+    else if(inputs.ax > inputs.ay){
+        return (inputs.ax > 0) ? GO_RIGHT : GO_LEFT;
+    else
+        return (inputs.ay > 0) ? GO_UP : GO_DOWN;
 }
 
 /**
  * Update the game state based on the user action. For example, if the user
  * requests GO_UP, then this function should determine if that is possible by
  * consulting the map, and update the Player position accordingly.
- * 
+ *
  * Return values are defined below. FULL_DRAW indicates that for this frame,
  * draw_game should not optimize drawing and should draw every tile, even if
  * the player has not moved.
@@ -55,15 +70,33 @@ int update_game(int action)
     // Save player previous location before updating
     Player.px = Player.x;
     Player.py = Player.y;
-    
+
+    MapItem* nextTile;
+
     // Do different things based on the each action.
     // You can define functions like "go_up()" that get called for each case.
     switch(action)
     {
-        case GO_UP:     break;
-        case GO_LEFT:   break;
-        case GO_DOWN:   break;
-        case GO_RIGHT:  break;
+        case GO_UP:
+            nextTile = get_north(Player.x, Player.y);
+            if(nextTile && nextTile->walkable)
+                Player.y -= 1;
+            break;
+        case GO_LEFT:
+            nextTile = get_west(Player.x, Player.y);
+            if(nextTile && nextTile->walkable)
+                Player.x -= 1;
+            break;
+        case GO_DOWN:
+            nextTile = get_south(Player.x, Player.y);
+            if(nextTile && nextTile->walkable)
+                Player.y += 1;
+            break;
+        case GO_RIGHT:
+            nextTile = get_east(Player.x, Player.y);
+            if(nextTile && nextTile->walkable)
+                Player.y += 1;
+            break;
         case ACTION_BUTTON: break;
         case MENU_BUTTON: break;
         default:        break;
@@ -200,9 +233,12 @@ int main()
         pc.printf("X: %d, Y: %d, Z: %d\r\n", in.ax, in.ay, in.az);
 
         // 2. Determine action (get_action)
+        int action = get_action(in);
         // 3. Update game (update_game)
+        update_game(action);
         // 3b. Check for game over
         // 4. Draw frame (draw_game)
+        draw_game(true);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();
