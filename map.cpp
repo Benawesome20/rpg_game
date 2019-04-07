@@ -42,7 +42,7 @@ static unsigned XY_KEY(int X, int Y) {
  */
 unsigned map_hash(unsigned key)
 {
-    unsigned hash_value = key % (NUM_TILES);
+    unsigned hash_value = key % (5100);
     return hash_value;
 }
 

@@ -27,9 +27,9 @@ int hardware_init()
     // Crank up the speed
     uLCD.baudrate(3000000);
    // pc.baud(115200);
-        
+
     //Initialize pushbuttons
-    button1.mode(PullUp); 
+    button1.mode(PullUp);
     button2.mode(PullUp);
     button3.mode(PullUp);
 
@@ -38,7 +38,7 @@ int hardware_init()
     return ERROR_NONE;
 }
 
-GameInputs read_inputs() 
+GameInputs read_inputs()
 {
     GameInputs in;
 
