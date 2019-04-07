@@ -78,28 +78,38 @@ int update_game(int action)
     switch(action)
     {
         case GO_UP:
+            pc.printf("Up\r\n");
             nextTile = get_north(Player.x, Player.y);
             if(nextTile && nextTile->walkable)
                 Player.y -= 1;
             break;
         case GO_LEFT:
+            pc.printf("Left\r\n");
             nextTile = get_west(Player.x, Player.y);
             if(nextTile && nextTile->walkable)
                 Player.x -= 1;
             break;
         case GO_DOWN:
+            pc.printf("Down\r\n");
             nextTile = get_south(Player.x, Player.y);
             if(nextTile && nextTile->walkable)
                 Player.y += 1;
             break;
         case GO_RIGHT:
+            pc.printf("Right\r\n");
             nextTile = get_east(Player.x, Player.y);
             if(nextTile && nextTile->walkable)
                 Player.y += 1;
             break;
-        case ACTION_BUTTON: break;
-        case MENU_BUTTON: break;
-        default:        break;
+        case ACTION_BUTTON:
+            pc.printf("Action button\r\n");
+            break;
+        case MENU_BUTTON:
+            pc.printf("Menu button\r\n");
+            break;
+        default:
+            pc.printf("Default\r\n");
+            break;
     }
     return NO_RESULT;
 }
@@ -230,7 +240,7 @@ int main()
         // Actually do the game update:
         // 1. Read inputs
         in = read_inputs();
-        pc.printf("X: %d, Y: %d, Z: %d\r\n", in.ax, in.ay, in.az);
+        //pc.printf("X: %d, Y: %d, Z: %d\r\n", in.ax, in.ay, in.az);
 
         // 2. Determine action (get_action)
         int action = get_action(in);
