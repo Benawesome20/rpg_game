@@ -30,8 +30,9 @@ static int active_map;
  * This function should uniquely map (x,y) onto the space of unsigned integers.
  */
 static unsigned XY_KEY(int X, int Y) {
-    // Cantor's Pairing Function
-    unsigned mapped = (X + Y)*(X + Y + 1)/2 + Y;
+    // Map it to the number as if each tile of the map were numbered
+    // going across from the top left and then down
+    unsigned mapped = Y * MAP_WIDTH + X;
     return mapped;
 }
 
@@ -42,7 +43,7 @@ static unsigned XY_KEY(int X, int Y) {
  */
 unsigned map_hash(unsigned key)
 {
-    unsigned hash_value = key % (5100);
+    unsigned hash_value = key % (NUM_TILES);
     return hash_value;
 }
 
