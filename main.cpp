@@ -47,7 +47,7 @@ int get_action(GameInputs inputs)
     else if(inputs.ax < NO_ACTION_LIMIT && inputs.ay < NO_ACTION_LIMIT)
         return NO_ACTION;
     // Otherwise, move in the direction of the greatest axis value
-    else if(inputs.ax > inputs.ay){
+    else if(inputs.ax > inputs.ay)
         return (inputs.ax > 0) ? GO_RIGHT : GO_LEFT;
     else
         return (inputs.ay > 0) ? GO_UP : GO_DOWN;
