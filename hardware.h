@@ -7,7 +7,7 @@
  */
 struct GameInputs {
     int b1, b2, b3;     // Button presses
-    double ax, ay, az;  // Accelerometer readings
+    int ax, ay, az;  // Accelerometer readings
 };
 
 /**
