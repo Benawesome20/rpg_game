@@ -80,26 +80,26 @@ int update_game(int action)
         case GO_UP:
             pc.printf("Up\r\n");
             nextTile = get_north(Player.x, Player.y);
-            if(nextTile && nextTile->walkable)
+            if(nextTile->walkable)
                 Player.y -= 1;
             break;
         case GO_LEFT:
             pc.printf("Left\r\n");
             nextTile = get_west(Player.x, Player.y);
-            if(nextTile && nextTile->walkable)
+            if(nextTile->walkable)
                 Player.x -= 1;
             break;
         case GO_DOWN:
             pc.printf("Down\r\n");
             nextTile = get_south(Player.x, Player.y);
-            if(nextTile && nextTile->walkable)
+            if(nextTile->walkable)
                 Player.y += 1;
             break;
         case GO_RIGHT:
             pc.printf("Right\r\n");
             nextTile = get_east(Player.x, Player.y);
-            if(nextTile && nextTile->walkable)
-                Player.y += 1;
+            if(nextTile->walkable)
+                Player.x += 1;
             break;
         case ACTION_BUTTON:
             pc.printf("Action button\r\n");
@@ -151,7 +151,7 @@ void draw_game(int init)
                 draw_player(u, v, Player.has_key);
                 continue;
             }
-            else if (x >= 0 && y >= 0 && x < map_width() && y < map_height()) // Current (i,j) in the map
+            else if (x >= 0 && y >= 0 && x < map_width() && y < map_height() && (i != 0 || j != 0)) // Current (i,j) in the map
             {
                 MapItem* curr_item = get_here(x, y);
                 MapItem* prev_item = get_here(px, py);
