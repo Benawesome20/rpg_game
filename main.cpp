@@ -248,7 +248,7 @@ int main()
         update_game(action);
         // 3b. Check for game over
         // 4. Draw frame (draw_game)
-        draw_game(true);
+        draw_game(false);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();
