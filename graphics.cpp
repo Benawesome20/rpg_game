@@ -49,6 +49,11 @@ void draw_plant(int u, int v)
     uLCD.BLIT(u , v, 11, 11, sprite_frames[0]);
 }
 
+void draw_NPC(int u, int v)
+{
+    uLCD.filled_rectangle(u, v, u+10, v+10, RED);
+}
+
 void draw_upper_status()
 {
     // Draw bottom border of status bar
