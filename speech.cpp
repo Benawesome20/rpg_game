@@ -37,10 +37,13 @@ void draw_speech_bubble()
 
 void erase_speech_bubble()
 {
+    uLCD.filled_rectangle(0, 93, 127, 115, BLACK);
 }
 
 void draw_speech_line(const char* line, int which)
 {
+    int offset = (which) ? 10 : 0;
+    uLCD.text_string(line, 3, 96 + offset, '\x00', YELLOW);
 }
 
 void speech_bubble_wait()
@@ -50,7 +53,7 @@ void speech_bubble_wait()
 void speech(const char* line1, const char* line2)
 {
     draw_speech_bubble();
-   // draw_speech_line(line1, TOP);
+    draw_speech_line(line1, TOP);
    // draw_speech_line(line2, BOTTOM);
    // speech_bubble_wait();
    // erase_speech_bubble();
