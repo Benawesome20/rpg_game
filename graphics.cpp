@@ -8,7 +8,7 @@
 void draw_player(int u, int v, int key)
 {
     //uLCD.filled_rectangle(u, v, u+11, v+11, RED);
-    uLCD.BLIT(u, v, 11, 11, sprites_frames[2]);
+    uLCD.BLIT(u, v, 11, 11, sprite_frames[2]);
 }
 
 #define YELLOW 0xFFFF00
@@ -40,13 +40,13 @@ void draw_nothing(int u, int v)
 void draw_wall(int u, int v)
 {
     //uLCD.filled_rectangle(u, v, u+10, v+10, BROWN);
-    uLCD.BLIT(u, v, 11, 11, sprites_frames[4]);
+    uLCD.BLIT(u, v, 11, 11, sprite_frames[4]);
 }
 
 void draw_plant(int u, int v)
 {
     //uLCD.filled_rectangle(u, v, u+10, v+10, GREEN);
-    uLCD.BLIT(u , v, 11, 11, sprites_frames[0]);
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[0]);
 }
 
 void draw_upper_status()

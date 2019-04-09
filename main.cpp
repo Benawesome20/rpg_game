@@ -117,7 +117,6 @@ int update_game(int action)
             omni = !omni; //toggle on/off
             break;
         default:
-            pc.printf("Default\r\n");
             break;
     }
     return NO_RESULT;
