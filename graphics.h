@@ -29,6 +29,7 @@ void draw_img(int u, int v, const char* img);
 void draw_nothing(int u, int v);
 void draw_wall(int u, int v);
 void draw_plant(int u, int v);
+void draw_NPC(int u, int v);
 
 /**
  * Draw the upper status bar.

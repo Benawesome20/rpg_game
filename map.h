@@ -55,6 +55,9 @@ typedef struct {
 // Define more of these!
 #define WALL    0
 #define PLANT   1
+#define NPC     2
+#define KEY     3
+#define STAIRS  4
 
 /**
  * Initializes the internal structures for all maps. This does not populate
@@ -150,5 +153,11 @@ void add_wall(int x, int y, int dir, int len);
  * before adding the plant.
  */
 void add_plant(int x, int y);
+
+/**
+ * Add an NPC item at (x,y). If there is already a MapItem at (x,y), erase it
+ * before adding the NPC.
+ */
+void add_NPC(int x, int y);
 
 #endif //MAP_H

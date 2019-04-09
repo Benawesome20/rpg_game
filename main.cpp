@@ -76,7 +76,7 @@ int update_game(int action)
 
     bool omni = false;
 
-    MapItem* nextTile;
+    MapItem* nextTile, up, down, left, right;
 
     // Do different things based on the each action.
     // You can define functions like "go_up()" that get called for each case.
@@ -108,12 +108,25 @@ int update_game(int action)
             break;
         case ACTION_BUTTON:
             pc.printf("Action button\r\n");
+            up = get_north(Player.x, Player.y);
+            left = get_west(Player., Player.y);
+            right = get_east(Player.x, Player.y);
+            down = get_south(Player.x, Player.y);
+
+            // If you are standing next to an NPC
+            if(up->type == NPC || left->type == NPC || right->type == NPC || down->type == NPC) {
+                pc.printf("NPC found\r\n");
+                const char* line1 = "Hello";
+                const char* line2 = "Goodbye";
+                speech(line1, line2);
+            }
+
             break;
         case MENU_BUTTON:
             pc.printf("Menu button\r\n");
             break;
         case OMNI_BUTTON:
-            pc.printf("Omnipotent Mode activated/deactivated\r\n");
+            pc.printf("Omnipotent Mode activated/deactivated: %d\r\n", !omni);
             omni = !omni; //toggle on/off
             break;
         default:
@@ -204,13 +217,16 @@ void init_main_map()
         add_plant(i % map_width(), i / map_width());
     }
     pc.printf("plants\r\n");
-        
+
     pc.printf("Adding walls!\r\n");
     add_wall(0,              0,              HORIZONTAL, map_width());
     add_wall(0,              map_height()-1, HORIZONTAL, map_width());
     add_wall(0,              0,              VERTICAL,   map_height());
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
     pc.printf("Walls done!\r\n");
+
+    add_NPC(25, 25);
+    pc.printf("NPC added\r\n");
 
     print_map();
 }

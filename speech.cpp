@@ -6,7 +6,13 @@
 /**
  * Draw the speech bubble background.
  */
-static void draw_speech_bubble();
+#define YELLOW 0xFFFF00
+#define BLACK 0xFFFFFFFF
+static void draw_speech_bubble()
+{
+    uLCD.rectangle(0, 93, 127, 115, YELLOW);
+    uLCD.filled_rectangle(1, 94, 126, 114, BLACK);
+}
 
 /**
  * Erase the speech bubble.
@@ -46,10 +52,10 @@ void speech_bubble_wait()
 void speech(const char* line1, const char* line2)
 {
     draw_speech_bubble();
-    draw_speech_line(line1, TOP);
-    draw_speech_line(line2, BOTTOM);
-    speech_bubble_wait();
-    erase_speech_bubble();
+   // draw_speech_line(line1, TOP);
+   // draw_speech_line(line2, BOTTOM);
+   // speech_bubble_wait();
+   // erase_speech_bubble();
 }
 
 void long_speech(const char* lines[], int n)

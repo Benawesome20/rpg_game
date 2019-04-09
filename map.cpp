@@ -171,3 +171,14 @@ void add_plant(int x, int y)
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
+
+void add_NPC(int x, int y)
+{
+    MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
+    w1->type = NPC;
+    w1->draw = draw_NPC;
+    w1->walkable = false;
+    w1->data = NULL;
+    void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
+    if (val) free(val); // If something is already there, free it
+}
