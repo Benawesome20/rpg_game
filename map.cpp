@@ -71,7 +71,7 @@ Map* set_active_map(int m)
 void print_map()
 {
     // As you add more types, you'll need to add more items to this array.
-    char lookup[] = {'W', 'P'};
+    char lookup[] = {'W', 'P', 'N'};
     for(int y = 0; y < map_height(); y++)
     {
         for (int x = 0; x < map_width(); x++)

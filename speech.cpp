@@ -7,12 +7,8 @@
  * Draw the speech bubble background.
  */
 #define YELLOW 0xFFFF00
-#define BLACK 0xFFFFFFFF
-static void draw_speech_bubble()
-{
-    uLCD.rectangle(0, 93, 127, 115, YELLOW);
-    uLCD.filled_rectangle(1, 94, 126, 114, BLACK);
-}
+#define BLACK 0x00000000
+static void draw_speech_bubble();
 
 /**
  * Erase the speech bubble.
@@ -35,6 +31,8 @@ static void speech_bubble_wait();
 
 void draw_speech_bubble()
 {
+    uLCD.rectangle(0, 93, 127, 115, YELLOW);
+    uLCD.filled_rectangle(1, 94, 126, 114, BLACK);
 }
 
 void erase_speech_bubble()

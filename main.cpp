@@ -76,7 +76,11 @@ int update_game(int action)
 
     bool omni = false;
 
-    MapItem* nextTile, up, down, left, right;
+    MapItem* nextTile;
+    MapItem* up;
+    MapItem* down;
+    MapItem* left;
+    MapItem* right;
 
     // Do different things based on the each action.
     // You can define functions like "go_up()" that get called for each case.
@@ -109,7 +113,7 @@ int update_game(int action)
         case ACTION_BUTTON:
             pc.printf("Action button\r\n");
             up = get_north(Player.x, Player.y);
-            left = get_west(Player., Player.y);
+            left = get_west(Player.x, Player.y);
             right = get_east(Player.x, Player.y);
             down = get_south(Player.x, Player.y);
 
