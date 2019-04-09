@@ -36,6 +36,7 @@ struct {
 #define GO_RIGHT 4
 #define GO_UP 5
 #define GO_DOWN 6
+#define OMNI_BUTTON 7
 int get_action(GameInputs inputs)
 {
     // Check for button presses first
@@ -43,6 +44,8 @@ int get_action(GameInputs inputs)
         return ACTION_BUTTON;
     else if(!inputs.b2)
         return MENU_BUTTON;
+    else if(!inputs.b3)
+        return OMNI_BUTTON;
     // If x and y axes are within a certain bound, do not move
     else if(abs(inputs.ax) < NO_ACTION_LIMIT && abs(inputs.ay) < NO_ACTION_LIMIT)
         return NO_ACTION;
@@ -71,6 +74,8 @@ int update_game(int action)
     Player.px = Player.x;
     Player.py = Player.y;
 
+    bool omni = false;
+
     MapItem* nextTile;
 
     // Do different things based on the each action.
@@ -80,25 +85,25 @@ int update_game(int action)
         case GO_UP:
             pc.printf("Up\r\n");
             nextTile = get_north(Player.x, Player.y);
-            if(nextTile->walkable)
+            if(omni || nextTile->walkable) //if omni is on or the next tile is walkable
                 Player.y -= 1;
             break;
         case GO_LEFT:
             pc.printf("Left\r\n");
             nextTile = get_west(Player.x, Player.y);
-            if(nextTile->walkable)
+            if(omni || nextTile->walkable)
                 Player.x -= 1;
             break;
         case GO_DOWN:
             pc.printf("Down\r\n");
             nextTile = get_south(Player.x, Player.y);
-            if(nextTile->walkable)
+            if(omni || nextTile->walkable)
                 Player.y += 1;
             break;
         case GO_RIGHT:
             pc.printf("Right\r\n");
             nextTile = get_east(Player.x, Player.y);
-            if(nextTile->walkable)
+            if(omni || nextTile->walkable)
                 Player.x += 1;
             break;
         case ACTION_BUTTON:
@@ -106,6 +111,10 @@ int update_game(int action)
             break;
         case MENU_BUTTON:
             pc.printf("Menu button\r\n");
+            break;
+        case OMNI_BUTTON:
+            pc.printf("Omnipotent Mode activated/deactivated\r\n");
+            omni = !omni; //toggle on/off
             break;
         default:
             pc.printf("Default\r\n");
