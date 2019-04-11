@@ -275,7 +275,7 @@ void init_main_map()
     add_wall(23,            24,              VERTICAL, 4);
     add_wall(26,            23,              HORIZONTAL, 2);
     add_wall(27,            24,              VERTICAL, 4);
-    add_wall(23,            29,              HORIZONTAL, 5);
+    add_wall(24,            27,              HORIZONTAL, 3);
     pc.printf("Walls done!\r\n");
 
     add_NPC(5, 7);
@@ -309,11 +309,11 @@ int main()
 
     GameInputs in;
 
-    // Initial drawing
-    draw_game(true);
-
     // Draw start page
     draw_start_page();
+
+    // Initial drawing
+    draw_game(true);
 
     // Main game loop
     while(1)

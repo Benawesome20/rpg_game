@@ -120,6 +120,9 @@ void draw_game_over(int win)
 
 void draw_start_page()
 {
+    // fill in borders
+    draw_border();
+
     // Cover map
     uLCD.filled_rectangle(3, 15, 126, 113, BLACK);
 
