@@ -164,7 +164,7 @@ int update_game(int action)
             }
 
             // If you are standing on or next to a win item, take it and win the game.
-            if(up->type == WIN_ITEM || left->type == WIN_ITEM || right->type == WIN_ITEM || down->type == WIN_ITEM)) {
+            if(up->type == WIN_ITEM || left->type == WIN_ITEM || right->type == WIN_ITEM || down->type == WIN_ITEM || here->type == WIN_ITEM) {
                 pc.printf("Win item taken\r\n");
 
                 return GAME_OVER_WIN;
@@ -276,6 +276,7 @@ void init_main_map()
     add_NPC(5, 7);
     add_key(5, 3);
     add_door(7, 5, 0);
+    add_win_item(3, 5);
     pc.printf("NPC, key, and door added\r\n");
 
     print_map();
@@ -324,11 +325,11 @@ int main()
         // 3b. Check for game over
         if(result == GAME_OVER_WIN) {
             draw_game_over(1);
-            return;
+            return 1;
         }
         else if(result == GAME_OVER_LOSS) {
             draw_game_over(0);
-            return;
+            return 0;
         }
         // 4. Draw frame (draw_game)
         draw_game(result);
