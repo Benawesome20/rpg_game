@@ -49,12 +49,20 @@ void speech_bubble_wait()
 {
     GameInputs in;
 
-    uLCD.filled_circle(120, 114, 5, YELLOW);
+    Timer c; c.start();
 
     // Get inputs and display a flashing button
     // while waiting for action button to be pressed
     do {
         Timer t; t.start();
+
+        if (c > 1000) {
+            uLCD.filled_circle(120, 114, 3, DGREY);
+            c.reset();
+        }
+        else if (c > 500)
+            uLCD.filled_circle(120, 114, 3, LGREY);
+        }
 
         in = read_inputs();
 
@@ -69,7 +77,7 @@ void speech(const char* line1, const char* line2)
     draw_speech_bubble();
     draw_speech_line(line1, TOP);
     draw_speech_line(line2, BOTTOM);
-   // speech_bubble_wait();
+    speech_bubble_wait();
    // erase_speech_bubble();
 }
 

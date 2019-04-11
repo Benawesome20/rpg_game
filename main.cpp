@@ -13,7 +13,7 @@ void init_main_map ();
 int main ();
 
 // Constants
-#define NO_ACTION_LIMIT 200
+#define NO_ACTION_LIMIT 200 // Accelerometer sensitivity limit required for movement
 
 /**
  * The main game state. Must include Player locations and previous locations for
