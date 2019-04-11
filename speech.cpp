@@ -7,7 +7,6 @@
  * Draw the speech bubble background.
  */
 #define YELLOW 0xFFFF00
-#define BLACK 0x00000000
 static void draw_speech_bubble();
 
 /**
@@ -48,6 +47,21 @@ void draw_speech_line(const char* line, int which)
 
 void speech_bubble_wait()
 {
+    GameInputs in;
+
+    uLCD.filled_circle(120, 114, 5, YELLOW);
+
+    // Get inputs and display a flashing button
+    // while waiting for action button to be pressed
+    do {
+        Timer t; t.start();
+
+        in = read_inputs();
+
+        t.stop();
+        int dt = t.read_ms();
+        if (dt < 100) wait_ms(100 - dt);
+    }while(in.b1);
 }
 
 void speech(const char* line1, const char* line2)
