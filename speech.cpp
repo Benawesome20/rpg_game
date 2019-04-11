@@ -2,6 +2,7 @@
 
 #include "globals.h"
 #include "hardware.h"
+#include "graphics.h"
 
 /**
  * Draw the speech bubble background.
@@ -43,7 +44,8 @@ void erase_speech_bubble()
 void draw_speech_line(const char* line, int which)
 {
     // who decided that text_string should have arbitrary rows and cols??
-    uLCD.text_string((char*) line, 1, 12 + which, FONT_7X8, YELLOW);
+    // 16 character max
+    uLCD.text_string((char*) line, 1, 12 + which, FONT_5X7, YELLOW);
 }
 
 void speech_bubble_wait()
@@ -84,4 +86,9 @@ void speech(const char* line1, const char* line2)
 
 void long_speech(const char* lines[], int n)
 {
+    int i;
+    int length = (n % 2) ? n-1 : n;
+    for(i = 0; i < length; i++)
+        speech(lines[i], lines[++i]);
+    if(length == n-1) speech(lines[n-1], "");
 }

@@ -120,9 +120,8 @@ int update_game(int action)
             // If you are standing next to an NPC
             if(up->type == NPC || left->type == NPC || right->type == NPC || down->type == NPC) {
                 pc.printf("NPC found\r\n");
-                const char* line1 = "Hello! This line is too long.";
-                const char* line2 = "Goodbye";
-                speech(line1, line2);
+                const char* lines[] = {"Hello! This", "line is too long.","Have a good day!", "Goodbye", "Also, see ya"};
+               long_speech(lines, 5);
             }
 
             break;
