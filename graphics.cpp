@@ -93,4 +93,25 @@ void draw_border()
     uLCD.filled_rectangle(124,  14, 127, 117, WHITE); // Right
 }
 
+void draw_game_over(int win)
+{
+    // Cover map
+    uLCD.filled_rectangle(3, 15, 126, 113, BLACK);
 
+    // Write message
+    uLCD.text_string("GAME", 3, 5, FONT_8X12, (win) ? YELLOW : RED);
+    uLCD.text_string("OVER", 3, 6, FONT_8X12, (win) ? YELLOW : RED);
+
+    // If the player won, give a winning messsage, otherwise, tell them they lost
+    if(win) {
+        uLCD.text_string("You win!", 3, 8, FONT_5X7, YELLOW);
+        uLCD.text_string("Congratulations!", 1, 9, FONT_5X7, YELLOW);
+    }
+    else
+        uLCD.text_string("YOU DIED", 2, 8, FONT_5X7, RED);
+}
+
+void draw_win_item(int u, int v)
+{
+    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); // change to sprite
+}

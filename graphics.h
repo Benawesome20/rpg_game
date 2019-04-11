@@ -32,6 +32,7 @@ void draw_plant(int u, int v);
 void draw_NPC(int u, int v);
 void draw_key(int u, int v);
 void draw_door(int u, int v);
+void draw_win_item(int u, int v);
 
 /**
  * Draw the upper status bar.
@@ -47,5 +48,10 @@ void draw_lower_status(int key);
  * Draw the border for the map.
  */
 void draw_border();
+
+/*
+ * Draw the game over screen, with either loss or victory
+ */
+void draw_game_over(int win);
 
 #endif // GRAPHICS_H

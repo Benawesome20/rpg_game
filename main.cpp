@@ -65,9 +65,10 @@ int get_action(GameInputs inputs)
  * draw_game should not optimize drawing and should draw every tile, even if
  * the player has not moved.
  */
-#define NO_RESULT 0
-#define GAME_OVER 1
-#define FULL_DRAW 2
+#define NO_RESULT       0
+#define GAME_OVER_WIN   1
+#define GAME_OVER_LOSS  2
+#define FULL_DRAW       3
 int update_game(int action)
 {
     // Save player previous location before updating
@@ -147,7 +148,7 @@ int update_game(int action)
             }
 
             // If you are standing next to a door with a key, open it
-            if((up->type == DOOR || left->type == DOOR || right->type == DOOR || down->type == DOOR) && Player.has_key) {
+            if(Player.has_key && (up->type == DOOR || left->type == DOOR || right->type == DOOR || down->type == DOOR)) {
                 pc.printf("Door opened\r\n");
 
                 if(up->type == DOOR)
@@ -160,6 +161,13 @@ int update_game(int action)
                     add_door(Player.x, Player.y + 1, 1);
 
                 return FULL_DRAW;
+            }
+
+            // If you are standing on or next to a win item, take it and win the game.
+            if(up->type == WIN_ITEM || left->type == WIN_ITEM || right->type == WIN_ITEM || down->type == WIN_ITEM)) {
+                pc.printf("Win item taken\r\n");
+
+                return GAME_OVER_WIN;
             }
             break;
         case MENU_BUTTON:
@@ -312,10 +320,18 @@ int main()
         // 2. Determine action (get_action)
         int action = get_action(in);
         // 3. Update game (update_game)
-        int full = update_game(action);
+        int result = update_game(action);
         // 3b. Check for game over
+        if(result == GAME_OVER_WIN) {
+            draw_game_over(1);
+            return;
+        }
+        else if(result == GAME_OVER_LOSS) {
+            draw_game_over(0);
+            return;
+        }
         // 4. Draw frame (draw_game)
-        draw_game(full);
+        draw_game(result);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();

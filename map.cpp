@@ -71,7 +71,7 @@ Map* set_active_map(int m)
 void print_map()
 {
     // As you add more types, you'll need to add more items to this array.
-    char lookup[] = {'W', 'P', 'N', 'K', 'D', 'S'};
+    char lookup[] = {'W', 'P', 'N', 'K', 'D', 'S', 'I'};
     for(int y = 0; y < map_height(); y++)
     {
         for (int x = 0; x < map_width(); x++)
@@ -200,6 +200,17 @@ void add_door(int x, int y, int open)
     w1->type = DOOR;
     w1->draw = (open) ? draw_nothing : draw_door; //change to actual draw functions
     w1->walkable = (open) ? true : false; // if the door is open, you can walk through it
+    w1->data = NULL;
+    void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
+    if (val) free(val); // If something is already there, free it
+}
+
+void add_win_item(int x, int y)
+{
+    MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
+    w1->type = WIN_ITEM;
+    w1->draw = draw_win_item;
+    w1->walkable = true;
     w1->data = NULL;
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it

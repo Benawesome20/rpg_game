@@ -59,6 +59,7 @@ typedef struct {
 #define KEY     3
 #define DOOR    4
 #define STAIRS  5
+#define WIN_ITEM 6
 
 /**
  * Initializes the internal structures for all maps. This does not populate
@@ -173,5 +174,12 @@ void add_key(int x, int y);
  * It can be open or closed.
  */
 void add_door(int x, int y, int open);
+
+/**
+ * Add a ______ at (x,y). If there is already a MapItem at (x,y), erase it
+ * before adding the _____.
+ */
+void add_win_item(int x, int y);
+
 
 #endif //MAP_H
