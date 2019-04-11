@@ -162,9 +162,16 @@ void add_plant(int x, int y);
 void add_NPC(int x, int y);
 
 /**
- * Add an key item at (x,y). If there is already a MapItem at (x,y), erase it
+ * Add a key item at (x,y). If there is already a MapItem at (x,y), erase it
  * before adding the key.
  */
 void add_key(int x, int y);
+
+/**
+ * Add a door at (x,y). If there is already a MapItem at (x,y), erase it
+ * before adding the door.
+ * It can be open or closed.
+ */
+void add_door(int x, int y, int open);
 
 #endif //MAP_H
