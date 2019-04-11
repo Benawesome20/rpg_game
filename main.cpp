@@ -229,7 +229,7 @@ void init_main_map()
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
     pc.printf("Walls done!\r\n");
 
-    add_NPC(25, 25);
+    add_NPC(5, 6);
     pc.printf("NPC added\r\n");
 
     print_map();
