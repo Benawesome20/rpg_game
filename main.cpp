@@ -201,9 +201,9 @@ void draw_game(int init)
         }
     }
 
-    // Draw status bars    
-    draw_upper_status();
-    draw_lower_status();
+    // Draw status bars
+    draw_upper_status(Player.x, Player.y);
+    draw_lower_status(Player.has_key);
 }
 
 
@@ -229,7 +229,8 @@ void init_main_map()
     pc.printf("Walls done!\r\n");
 
     add_NPC(5, 6);
-    pc.printf("NPC added\r\n");
+    add_key(5, 3);
+    pc.printf("NPC and key added\r\n");
 
     print_map();
 }
@@ -252,6 +253,7 @@ int main()
     // Initialize game state
     set_active_map(0);
     Player.x = Player.y = 5;
+    Player.has_key = 0;
 
     GameInputs in;
 

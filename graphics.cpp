@@ -7,8 +7,10 @@
 
 void draw_player(int u, int v, int key)
 {
-    //uLCD.filled_rectangle(u, v, u+11, v+11, RED);
-    uLCD.BLIT(u, v, 11, 11, sprite_frames[2]);
+    if(!key)
+        uLCD.BLIT(u, v, 11, 11, sprite_frames[2]);
+    else
+        uLCD.BLIT(u, v, 11, 11, sprite_frames[3]);
 }
 
 #define YELLOW 0xFFFF00
@@ -39,35 +41,48 @@ void draw_nothing(int u, int v)
 
 void draw_wall(int u, int v)
 {
-    //uLCD.filled_rectangle(u, v, u+10, v+10, BROWN);
     uLCD.BLIT(u, v, 11, 11, sprite_frames[4]);
 }
 
 void draw_plant(int u, int v)
 {
-    //uLCD.filled_rectangle(u, v, u+10, v+10, GREEN);
     uLCD.BLIT(u , v, 11, 11, sprite_frames[0]);
 }
 
 void draw_NPC(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, RED);
+    uLCD.filled_rectangle(u, v, u+10, v+10, RED); // change to sprite
 }
 
-void draw_upper_status()
+void draw_key(int u, int v)
+{
+    uLCD.BLIT(u, v, 11, 11, sprite_frames[1]);
+}
+
+void draw_door(int u, int v)
+{
+    uLCD.filled_rectangle(u, v, u+10, v+10, BROWN); // change to sprite
+}
+
+void draw_upper_status(int player_x, int player_y)
 {
     // Draw bottom border of status bar
     uLCD.line(0, 9, 127, 9, GREEN);
-    
+
     // Add other status info drawing code here
+    char* posString;
+    sprintf(posString, "Position: %u, %u", player_x, player_y);
+    uLCD.text_string(posString, 0, 0, FONT_5X7, YELLOW)
 }
 
-void draw_lower_status()
+void draw_lower_status(int key);
 {
     // Draw top border of status bar
     uLCD.line(0, 118, 127, 118, GREEN);
-    
+
     // Add other status info drawing code here
+    if(key)
+        draw_key(0, 110);
 }
 
 void draw_border()

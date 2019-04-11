@@ -23,23 +23,25 @@ void draw_player(int u, int v, int key);
 void draw_img(int u, int v, const char* img);
 
 /**
- * DrawFunc functions. 
+ * DrawFunc functions.
  * These can be used as the MapItem draw functions.
  */
 void draw_nothing(int u, int v);
 void draw_wall(int u, int v);
 void draw_plant(int u, int v);
 void draw_NPC(int u, int v);
+void draw_key(int u, int v);
+void draw_door(int u, int v);
 
 /**
  * Draw the upper status bar.
  */
-void draw_upper_status();
+void draw_upper_status(int player_x, int player_y);
 
 /**
  * Draw the lower status bar.
- */ 
-void draw_lower_status();
+ */
+void draw_lower_status(int key);
 
 /**
  * Draw the border for the map.
