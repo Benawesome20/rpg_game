@@ -22,7 +22,8 @@ int main ();
 struct {
     int x,y;    // Current locations
     int px, py; // Previous locations
-    int has_key;
+    int has_key; // if the player is holding the key
+    bool omni; // if omnipotent mode is turned on
 } Player;
 
 /**
@@ -75,8 +76,6 @@ int update_game(int action)
     Player.px = Player.x;
     Player.py = Player.y;
 
-    bool omni = false;
-
     MapItem* nextTile;
     MapItem* up;
     MapItem* down;
@@ -91,25 +90,25 @@ int update_game(int action)
         case GO_UP:
             pc.printf("Up\r\n");
             nextTile = get_north(Player.x, Player.y);
-            if(omni || nextTile->walkable) //if omni is on or the next tile is walkable
+            if(Player.omni || nextTile->walkable) //if omni is on or the next tile is walkable
                 Player.y -= 1;
             break;
         case GO_LEFT:
             pc.printf("Left\r\n");
             nextTile = get_west(Player.x, Player.y);
-            if(omni || nextTile->walkable)
+            if(Player.omni || nextTile->walkable)
                 Player.x -= 1;
             break;
         case GO_DOWN:
             pc.printf("Down\r\n");
             nextTile = get_south(Player.x, Player.y);
-            if(omni || nextTile->walkable)
+            if(Player.omni || nextTile->walkable)
                 Player.y += 1;
             break;
         case GO_RIGHT:
             pc.printf("Right\r\n");
             nextTile = get_east(Player.x, Player.y);
-            if(omni || nextTile->walkable)
+            if(Player.omni || nextTile->walkable)
                 Player.x += 1;
             break;
         case ACTION_BUTTON:
@@ -174,8 +173,8 @@ int update_game(int action)
             pc.printf("Menu button\r\n");
             break;
         case OMNI_BUTTON:
-            pc.printf("Omnipotent Mode activated/deactivated: %d\r\n", !omni);
-            omni = !omni; //toggle on/off
+            pc.printf("Omnipotent Mode activated/deactivated: %d\r\n", !Player.omni);
+            Player.omni = !Player.omni; //toggle on/off
             break;
         default:
             break;
