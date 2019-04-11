@@ -89,6 +89,6 @@ void long_speech(const char* lines[], int n)
     int i;
     int length = (n % 2) ? n-1 : n;
     for(i = 0; i < length; i++)
-        speech(lines[i], lines[++i]);
+        speech(lines[i++], lines[i]);
     if(length == n-1) speech(lines[n-1], "");
 }
