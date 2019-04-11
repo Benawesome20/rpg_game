@@ -116,6 +116,7 @@ int update_game(int action)
             left = get_west(Player.x, Player.y);
             right = get_east(Player.x, Player.y);
             down = get_south(Player.x, Player.y);
+            here = get_here(Player.x, Player,y);
 
             // If you are standing next to an NPC
             if(up->type == NPC || left->type == NPC || right->type == NPC || down->type == NPC) {
@@ -124,6 +125,11 @@ int update_game(int action)
                long_speech(lines, 5);
             }
 
+            // If you are standing on or next to a key
+            if(up->type == KEY || left->type == KEY || right->type == KEY || down->type == KEY || here->type == KEY) {
+                pc.printf("Key found\r\n");
+                Player.has_key = 1;
+            }
             break;
         case MENU_BUTTON:
             pc.printf("Menu button\r\n");
