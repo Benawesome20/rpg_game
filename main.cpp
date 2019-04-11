@@ -145,6 +145,22 @@ int update_game(int action)
 
                 return FULL_DRAW;
             }
+
+            // If you are standing next to a door with a key, open it
+            if((up->type == DOOR || left->type == DOOR || right->type == DOOR || down->type == DOOR) && Player.has_key) {
+                pc.printf("Door opened\r\n");
+
+                if(up->type == DOOR)
+                    add_door(Player.x, Player.y - 1, 1);
+                else if(left->type == DOOR)
+                    add_door(Player.x - 1, Player.y, 1);
+                else if(right->type == DOOR)
+                    add_door(Player.x + 1, Player.y, 1);
+                else
+                    add_door(Player.x, Player.y + 1, 1);
+
+                return FULL_DRAW;
+            }
             break;
         case MENU_BUTTON:
             pc.printf("Menu button\r\n");
@@ -249,9 +265,10 @@ void init_main_map()
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
     pc.printf("Walls done!\r\n");
 
-    add_NPC(5, 6);
+    add_NPC(5, 7);
     add_key(5, 3);
-    pc.printf("NPC and key added\r\n");
+    add_door(7, 5, 0);
+    pc.printf("NPC, key, and door added\r\n");
 
     print_map();
 }

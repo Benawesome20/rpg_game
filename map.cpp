@@ -193,3 +193,14 @@ void add_key(int x, int y)
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
+
+void add_door(int x, int y, int open)
+{
+    MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
+    w1->type = DOOR;
+    w1->draw = (open) ? draw_nothing : draw_door; //change to actual draw functions
+    w1->walkable = (open) ? true : false; // if the door is open, you can walk through it
+    w1->data = NULL;
+    void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
+    if (val) free(val); // If something is already there, free it
+}
