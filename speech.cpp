@@ -43,7 +43,7 @@ void erase_speech_bubble()
 void draw_speech_line(const char* line, int which)
 {
     // who decided that text_string should have arbitrary rows and cols??
-    uLCD.text_string(line, 1, 12 + which, FONT_7X8, YELLOW);
+    uLCD.text_string((char*) line, 1, 12 + which, FONT_7X8, YELLOW);
 }
 
 void speech_bubble_wait()
