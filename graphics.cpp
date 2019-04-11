@@ -4,6 +4,8 @@
 
 #include "frames.h"
 
+#include "hardware.h"
+
 
 void draw_player(int u, int v, int key)
 {
@@ -64,6 +66,11 @@ void draw_door(int u, int v)
     uLCD.filled_rectangle(u, v, u+10, v+10, BROWN); // change to sprite
 }
 
+void draw_win_item(int u, int v)
+{
+    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); // change to sprite
+}
+
 void draw_upper_status(int player_x, int player_y)
 {
     // Draw bottom border of status bar
@@ -111,7 +118,27 @@ void draw_game_over(int win)
         uLCD.text_string("YOU DIED", 5, 8, FONT_5X7, RED);
 }
 
-void draw_win_item(int u, int v)
+void draw_start_page()
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); // change to sprite
+    // Cover map
+    uLCD.filled_rectangle(3, 15, 126, 113, BLACK);
+
+    // Write message
+    uLCD.text_string("GT LEGEND", 3, 5, FONT_12X16, BLUE);
+    uLCD.text_string("by Benjamin", 1, 6, FONT_5X7, BLUE);
+    uLCD.text_string("Ventimiglia", 1, 7, FONT_5X7, BLUE);
+    uLCD.text_string("PRESS START", 1, 9, FONT_5X7, BLUE);
+
+    GameInputs in;
+
+    while(in.b1) {
+        Timer t; t.start();
+
+        in = read_inputs();
+
+        t.stop();
+        int dt = t.read_ms();
+        if (dt < 100) wait_ms(100 - dt);
+    }
+
 }

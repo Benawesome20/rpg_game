@@ -270,6 +270,12 @@ void init_main_map()
     add_wall(0,              map_height()-1, HORIZONTAL, map_width());
     add_wall(0,              0,              VERTICAL,   map_height());
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
+    // Player building
+    add_wall(23,            23,              HORIZONTAL, 2);
+    add_wall(23,            24,              VERTICAL, 4);
+    add_wall(26,            23,              HORIZONTAL, 2);
+    add_wall(27,            24,              VERTICAL, 4);
+    add_wall(23,            29,              HORIZONTAL, 5);
     pc.printf("Walls done!\r\n");
 
     add_NPC(5, 7);
@@ -298,13 +304,16 @@ int main()
 
     // Initialize game state
     set_active_map(0);
-    Player.x = Player.y = 5;
+    Player.x = Player.y = 25;
     Player.has_key = 0;
 
     GameInputs in;
 
     // Initial drawing
     draw_game(true);
+
+    // Draw start page
+    draw_start_page();
 
     // Main game loop
     while(1)
@@ -330,8 +339,10 @@ int main()
             draw_game_over(0);
             return 0;
         }
+
         // 4. Draw frame (draw_game)
         draw_game(result);
+
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();

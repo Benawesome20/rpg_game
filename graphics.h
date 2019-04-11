@@ -54,4 +54,9 @@ void draw_border();
  */
 void draw_game_over(int win);
 
+/*
+ * Draw the start page of the game
+ */
+void draw_start_page();
+
 #endif // GRAPHICS_H
