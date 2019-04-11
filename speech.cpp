@@ -42,11 +42,8 @@ void erase_speech_bubble()
 
 void draw_speech_line(const char* line, int which)
 {
-    int offset = (which) ? 10 : 0;
-    uLCD.locate(3, 96 + offset);
-    uLCD.color(YELLOW);
-    uLCD.puts((char*) line);
-    //uLCD.text_string(line, 3, 96 + offset, '\x00', YELLOW);
+    // who decided that text_string should have arbitrary rows and cols??
+    uLCD.text_string(line, 1, 12 + which, FONT_7X8, YELLOW);
 }
 
 void speech_bubble_wait()
@@ -57,7 +54,7 @@ void speech(const char* line1, const char* line2)
 {
     draw_speech_bubble();
     draw_speech_line(line1, TOP);
-   // draw_speech_line(line2, BOTTOM);
+    draw_speech_line(line2, BOTTOM);
    // speech_bubble_wait();
    // erase_speech_bubble();
 }
