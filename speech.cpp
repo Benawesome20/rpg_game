@@ -43,7 +43,10 @@ void erase_speech_bubble()
 void draw_speech_line(const char* line, int which)
 {
     int offset = (which) ? 10 : 0;
-    uLCD.text_string(line, 3, 96 + offset, '\x00', YELLOW);
+    uLCD.locate(3, 96 + offset);
+    uLCD.color(YELLOW);
+    uLCD.puts((char*) line);
+    //uLCD.text_string(line, 3, 96 + offset, '\x00', YELLOW);
 }
 
 void speech_bubble_wait()
