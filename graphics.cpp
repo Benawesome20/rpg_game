@@ -127,10 +127,10 @@ void draw_start_page()
     uLCD.filled_rectangle(3, 15, 126, 113, BLACK);
 
     // Write message
-    uLCD.text_string("GT LEGEND", 3, 5, FONT_12X16, BLUE);
-    uLCD.text_string("by Benjamin", 1, 6, FONT_5X7, BLUE);
-    uLCD.text_string("Ventimiglia", 1, 7, FONT_5X7, BLUE);
-    uLCD.text_string("PRESS START", 1, 9, FONT_5X7, BLUE);
+    uLCD.text_string("GT LEGEND", 5, 5, FONT_12X16, BLUE);
+    uLCD.text_string("by Benjamin", 4, 6, FONT_5X7, BLUE);
+    uLCD.text_string("Ventimiglia", 4, 7, FONT_5X7, BLUE);
+    uLCD.text_string("PRESS START", 4, 12, FONT_5X7, BLUE);
 
     GameInputs in;
 
