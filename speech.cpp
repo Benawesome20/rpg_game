@@ -37,6 +37,7 @@ void draw_speech_bubble()
 void erase_speech_bubble()
 {
     uLCD.filled_rectangle(0, 93, 127, 115, BLACK);
+    draw_border();
 }
 
 void draw_speech_line(const char* line, int which)
@@ -56,13 +57,13 @@ void speech_bubble_wait()
     do {
         Timer t; t.start();
 
-        if (c > 1000) {
+        int dc = c.read_ms();
+        if (dc > 1000) {
             uLCD.filled_circle(120, 114, 3, DGREY);
             c.reset();
         }
-        else if (c > 500)
+        else if (dc > 500)
             uLCD.filled_circle(120, 114, 3, LGREY);
-        }
 
         in = read_inputs();
 
@@ -78,7 +79,7 @@ void speech(const char* line1, const char* line2)
     draw_speech_line(line1, TOP);
     draw_speech_line(line2, BOTTOM);
     speech_bubble_wait();
-   // erase_speech_bubble();
+    erase_speech_bubble();
 }
 
 void long_speech(const char* lines[], int n)
