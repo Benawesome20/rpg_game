@@ -82,7 +82,7 @@ void draw_lower_status(int key)
 
     // Add other status info drawing code here
     if(key)
-        draw_key(0, 110);
+        draw_key(0, 119);
 }
 
 void draw_border()
