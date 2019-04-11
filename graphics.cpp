@@ -70,12 +70,12 @@ void draw_upper_status(int player_x, int player_y)
     uLCD.line(0, 9, 127, 9, GREEN);
 
     // Add other status info drawing code here
-    char* posString;
+    char posString[14];
     sprintf(posString, "Position: %u, %u", player_x, player_y);
-    uLCD.text_string(posString, 0, 0, FONT_5X7, YELLOW)
+    uLCD.text_string(posString, 0, 0, FONT_5X7, YELLOW);
 }
 
-void draw_lower_status(int key);
+void draw_lower_status(int key)
 {
     // Draw top border of status bar
     uLCD.line(0, 118, 127, 118, GREEN);
