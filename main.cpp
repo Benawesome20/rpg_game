@@ -124,6 +124,7 @@ int update_game(int action)
                 pc.printf("NPC found\r\n");
                 const char* lines[] = {"Hello! This", "line is too long.","Have a good day!", "Goodbye", "Also, see ya"};
                long_speech(lines, 5);
+               return FULL_DRAW;
             }
 
             // If you are standing on or next to a key, take it and erase it
@@ -141,6 +142,8 @@ int update_game(int action)
                     map_erase(Player.x, Player.y + 1);
                 else
                     map_erase(Player.x, Player.y);
+
+                return FULL_DRAW;
             }
             break;
         case MENU_BUTTON:
@@ -292,10 +295,10 @@ int main()
         // 2. Determine action (get_action)
         int action = get_action(in);
         // 3. Update game (update_game)
-        update_game(action);
+        int full = update_game(action);
         // 3b. Check for game over
         // 4. Draw frame (draw_game)
-        draw_game(false);
+        draw_game(full);
         // 5. Frame delay
         t.stop();
         int dt = t.read_ms();
