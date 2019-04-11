@@ -70,8 +70,8 @@ void draw_upper_status(int player_x, int player_y)
     uLCD.line(0, 9, 127, 9, GREEN);
 
     // Add other status info drawing code here
-    char posString[14];
-    sprintf(posString, "Position: %u, %u", player_x, player_y);
+    char posString[16];
+    sprintf(posString, "Position: %u, %u ", player_x, player_y);
     uLCD.text_string(posString, 0, 0, FONT_5X7, YELLOW);
 }
 
