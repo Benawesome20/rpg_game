@@ -249,6 +249,15 @@ int update_game(int action)
 
                 return GAME_OVER_WIN;
             }
+
+            // If you are standing on or next to stairs, go to their map.
+            if(next_to(Player.x, Player.y, STAIRS, true, false)) {
+                pc.printf("Going down stairs\r\n");
+                set_active_map(1);
+                Player.x = 25;
+                Player.y = 40;
+                return FULL_DRAW;
+            }
             break;
         case MENU_BUTTON:
             pc.printf("Menu button\r\n");
