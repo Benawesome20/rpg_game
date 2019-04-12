@@ -157,53 +157,69 @@ int update_game(int action)
             MapItem* npc = next_to(Player.x, Player.y, NPC, false, false);
             if(npc) {
                 pc.printf("NPC found\r\n");
-                const char* lines[];
-                int length;
-                if(npc->data && *npc->data == START) {
-                    lines = { "Wha... where am  ",
-                              "I? Who are you?  ",
-                              "No, wait... I'm  ",
-                              "supposed to tell ",
-                              "you something... ",
-                              "There's a key    ",
-                              "hidden in those  ",
-                              "ruins over       ",
-                              "there; it's the  ",
-                              "only way to      ",
-                              "escape...        ",
-                              "How do I know    ",
-                              "that?            "};
-                    length = 13;
+                if (npc->data) pc.printf("NPC data: %u\r\n", *((int*)npc->data));
+                if(npc->data && *((int*)npc->data) == START) {
+                    const char* lines[] = { "Wha... where am  ",
+                                            "I? Who are you?  ",
+                                            "No, wait... I'm  ",
+                                            "supposed to tell ",
+                                            "you something... ",
+                                            "There's a key    ",
+                                            "hidden in those  ",
+                                            "ruins over       ",
+                                            "there; it's the  ",
+                                            "only way to      ",
+                                            "escape...        ",
+                                            "How do I know    ",
+                                            "that?            "};
+                    long_speech(lines, 13);
+
+                    // set the NPC to say the next lines
+                    static int next = GO;
+                    npc->data = &next;
+                    return FULL_DRAW;
                 }
-                else if(*npc->data == GO) {
-                    lines = { "You have to get  ",
-                              "that key. I'm    ",
-                              "not allowed to   ",
-                              "leave this map.  "};
-                    length = 4;
+                else if(npc->data && *((int*)npc->data) == GO) {
+                    const char* lines[] = { "You have to get  ",
+                                            "that key. I'm    ",
+                                            "not allowed to   ",
+                                            "leave this map.  "};
+                    long_speech(lines, 4);
+
+                    // set the NPC to say the next lines if the player has the key
+                    if(Player.has_key == true) {
+                        static int next = FOUND;
+                        npc->data = &next;
+                    }
+                    return FULL_DRAW;
                 }
-                else if(*npc->data == FOUND) {
-                    lines = { "Thank god, you   ",
-                              "found it. There's",
-                              "only one lock in ",
-                              "this godforsaken ",
-                              "place, it's just ",
-                              "south of here.   ",
-                              "You know the     ",
-                              "place.           "};
-                    length = 8;
+                else if(npc->data && *((int*)npc->data) == FOUND) {
+                    const char* lines[] = { "Thank god, you   ",
+                                            "found it. There's",
+                                            "only one lock in ",
+                                            "this godforsaken ",
+                                            "place, it's just ",
+                                            "south of here.   ",
+                                            "You know the     ",
+                                            "place.           "};
+                    long_speech(lines, 8);
+
+                    // set the NPC to say the next lines
+                    static int next = END;
+                    npc->data = &next;
+                    return FULL_DRAW;
                 }
-                else if(*npc->data == END) {
-                    lines = { "Please, end it.  "};
-                    length = 1;
+                else if(npc->data && *((int*)npc->data) == END) {
+                    const char* lines[] = { "Please, end it.  "};
+                    long_speech(lines, 1);
+                    return FULL_DRAW;
                 }
                 else {
-                    lines = { "YOU SHOULDN'T BE",
+                    const char* lines[] = { "YOU SHOULDN'T BE",
                               "HERE.           "};
-                    length = 2;
+                    long_speech(lines, 2);
+                    return FULL_DRAW;
                 }
-                long_speech((char*)lines, length);
-                return FULL_DRAW;
             }
 
             // If you are standing on or next to a key, take it and erase it
@@ -225,7 +241,7 @@ int update_game(int action)
             }
 
             // If you are standing on or next to a win item, take it and win the game.
-            if(next_to(Player.x, Player.y, WIN_ITEM, true, false) {
+            if(next_to(Player.x, Player.y, WIN_ITEM, true, false)) {
                 pc.printf("Win item taken\r\n");
 
                 return GAME_OVER_WIN;
