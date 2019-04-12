@@ -16,10 +16,10 @@ int main ();
 // Constants
 #define NO_ACTION_LIMIT 200 // Accelerometer sensitivity limit required for movement
 // NPC states
-#define START 0
-#define GO    1
-#define FOUND 2
-#define END   3
+#define START 1
+#define GO    2
+#define FOUND 3
+#define END   4
 /**
  * The main game state. Must include Player locations and previous locations for
  * drawing to work properly. Other items can be added as needed.
@@ -160,10 +160,11 @@ int update_game(int action)
                 if (npc->data) pc.printf("NPC data: %u\r\n", *((int*)npc->data));
 
                 // set the NPC to say the correct lines if the player has the key
-                if(Player.has_key == true) {
+                if(npc->data && Player.has_key == true && *((int*)npc->data) == GO) {
                     static int next = FOUND;
                     npc->data = &next;
                 }
+
                 if(npc->data && *((int*)npc->data) == START) {
                     const char* lines[] = { "Wha... where am  ",
                                             "I? Who are you?  ",
