@@ -177,10 +177,10 @@ void add_door(int x, int y, int open);
 
 
 /**
- * Add stairs at (x,y). If there is already a MapItem at (x,y), erase it
+ * Add stairs at (x,y) to map map. If there is already a MapItem at (x,y), erase it
  * before adding the stairs.
  */
-void add_stairs(int x, int y,);
+void add_stairs(int x, int y, int map);
 
 /**
  * Add a throne at (x,y). If there is already a MapItem at (x,y), erase it

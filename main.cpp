@@ -371,7 +371,7 @@ void init_main_map()
     add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
-    add_stairs(24, 18);
+    add_stairs(24, 18, 1);
     pc.printf("NPC, key, and door added\r\n");
 
     print_map();

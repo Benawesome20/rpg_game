@@ -81,6 +81,15 @@ Map* set_active_map(int m)
         return NULL;
 }
 
+Map* get_map(int m)
+{
+    if(m == 0)
+        return &map;
+    else if(m == 1)
+        return &ruins;
+    else
+        return &map; //default to map
+
 void print_map()
 {
     // As you add more types, you'll need to add more items to this array.
@@ -212,9 +221,20 @@ void add_door(int x, int y, int open)
 {
     MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
     w1->type = DOOR;
-    w1->draw = (open) ? draw_nothing : draw_door; //change to actual draw functions
+    w1->draw = (open) ? draw_nothing : draw_door; //TODO: change to actual draw functions
     w1->walkable = (open) ? true : false; // if the door is open, you can walk through it
     w1->data = NULL;
+    void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
+    if (val) free(val); // If something is already there, free it
+}
+
+void add_stairs(int x, int y, int map)
+{
+    MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
+    w1->type = STAIRS;
+    w1->draw = draw_stairs;
+    w1->walkable = true;
+    w1->data = get_map(map); //data points to the map the stairs lead to
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
