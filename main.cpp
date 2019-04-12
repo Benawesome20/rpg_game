@@ -4,6 +4,7 @@
 #include "map.h"
 #include "graphics.h"
 #include "speech.h"
+#include "maze.h"
 
 // Functions in this file
 MapItem* next_to(int x, int y, int type, int on, int erase);
@@ -337,15 +338,19 @@ void draw_game(int init)
  */
 void init_main_map()
 {
+    Map* map = set_active_map(1);
+    add_maze(14, 14, maze1);
+    print_map();
+
     // "Random" plants
-    Map* map = set_active_map(0);
+    map = set_active_map(0);
     for(int i = map_width() + 3; i < map_area(); i += 39)
     {
         // Make sure there are no plants in the building
         if(!(i % map_width() > 16 && i % map_width() < 35 && i / map_width() > 27 && i / map_width() < 40))
             add_plant(i % map_width(), i / map_width());
     }
-    pc.printf("plants\r\n");
+    pc.printf("plants on main\r\n");
 
     pc.printf("Adding walls!\r\n");
     add_wall(0,              0,              HORIZONTAL, map_width());
@@ -365,14 +370,14 @@ void init_main_map()
     add_wall(35,            27,              VERTICAL,   13);
     add_wall(16,            40,              HORIZONTAL, 20);
 
-    pc.printf("Walls done!\r\n");
+    pc.printf("Walls done on main!\r\n");
 
     add_NPC(24, 22, START);
     add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
     add_stairs(24, 18, 1);
-    pc.printf("NPC, key, and door added\r\n");
+    pc.printf("NPC, key, and door added on main\r\n");
 
     print_map();
 }

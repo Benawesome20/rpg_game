@@ -250,3 +250,12 @@ void add_win_item(int x, int y)
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
+
+void add_maze(int x, int y, const char* maze)
+{
+    for(int i = 0; i < 11*11; i++)
+    {
+        if(maze[i] == 'w')
+            add_wall(i % 11, i / 11, HORIZONTAL, 1);
+    }
+}

@@ -188,5 +188,9 @@ void add_stairs(int x, int y, int map);
  */
 void add_win_item(int x, int y);
 
+/*
+ * Add a maze of walls starting at (x,y) given by the char array.
+ */
+void add_maze(int x, int y, const char* maze);
 
 #endif //MAP_H
