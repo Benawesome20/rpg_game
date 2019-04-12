@@ -338,7 +338,12 @@ void draw_game(int init)
  */
 void init_main_map()
 {
+    // Create ruins
     Map* map = set_active_map(1);
+    add_wall(0,              0,              HORIZONTAL, map_width());
+    add_wall(0,              map_height()-1, HORIZONTAL, map_width());
+    add_wall(0,              0,              VERTICAL,   map_height());
+    add_wall(map_width()-1,  0,              VERTICAL,   map_height());
     add_maze(14, 14, maze1);
     print_map();
 
