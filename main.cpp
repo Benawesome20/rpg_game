@@ -158,6 +158,12 @@ int update_game(int action)
             if(npc) {
                 pc.printf("NPC found\r\n");
                 if (npc->data) pc.printf("NPC data: %u\r\n", *((int*)npc->data));
+
+                // set the NPC to say the correct lines if the player has the key
+                if(Player.has_key == true) {
+                    static int next = FOUND;
+                    npc->data = &next;
+                }
                 if(npc->data && *((int*)npc->data) == START) {
                     const char* lines[] = { "Wha... where am  ",
                                             "I? Who are you?  ",
@@ -186,11 +192,6 @@ int update_game(int action)
                                             "leave this map.  "};
                     long_speech(lines, 4);
 
-                    // set the NPC to say the next lines if the player has the key
-                    if(Player.has_key == true) {
-                        static int next = FOUND;
-                        npc->data = &next;
-                    }
                     return FULL_DRAW;
                 }
                 else if(npc->data && *((int*)npc->data) == FOUND) {
@@ -340,7 +341,7 @@ void init_main_map()
     for(int i = map_width() + 3; i < map_area(); i += 39)
     {
         // Make sure there are no plants in the building
-        if(i % map_width() <= 16 && i % map_width >= 35 && i / map_width() <= 27 && i / map_width() >= 40)
+        if(i % map_width() <= 16 && i % map_width() >= 35 && i / map_width() <= 27 && i / map_width() >= 40)
             add_plant(i % map_width(), i / map_width());
     }
     pc.printf("plants\r\n");
@@ -366,7 +367,7 @@ void init_main_map()
     pc.printf("Walls done!\r\n");
 
     add_NPC(24, 22, START);
-    add_key(5, 3);
+    add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
     pc.printf("NPC, key, and door added\r\n");
