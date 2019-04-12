@@ -254,8 +254,8 @@ int update_game(int action)
             if(next_to(Player.x, Player.y, STAIRS, true, false)) {
                 pc.printf("Going down stairs\r\n");
                 set_active_map(1);
-                Player.x = 25;
-                Player.y = 40;
+                Player.x = 7;
+                Player.y = 28;
                 return FULL_DRAW;
             }
             break;
@@ -353,7 +353,7 @@ void init_main_map()
     add_wall(0,              map_height()-1, HORIZONTAL, map_width());
     add_wall(0,              0,              VERTICAL,   map_height());
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
-    add_maze(14, 14, maze1);
+    add_maze(2, 17, maze1);
     print_map();
 
     // "Random" plants

@@ -33,7 +33,7 @@ static int active_map;
 static unsigned XY_KEY(int X, int Y) {
     // Map it to the number as if each tile of the map were numbered
     // going across from the top left and then down
-    unsigned mapped = Y * MAP_WIDTH + X;
+    unsigned mapped = Y * map_width() + X;
     return mapped;
 }
 
@@ -44,7 +44,7 @@ static unsigned XY_KEY(int X, int Y) {
  */
 unsigned map_hash(unsigned key)
 {
-    unsigned hash_value = key % (MAP_WIDTH);
+    unsigned hash_value = key % (map_width);
     return hash_value;
 }
 
@@ -52,12 +52,12 @@ void maps_init()
 {
     // Initialize hash table
     map.items = createHashTable(map_hash, MAP_HEIGHT);
-    ruins.items = createHashTable(map_hash, MAP_HEIGHT);
+    ruins.items = createHashTable(map_hash, 30);
     // Set width & height
     map.w = MAP_WIDTH;
     map.h = MAP_HEIGHT;
-    ruins.w = MAP_WIDTH;
-    ruins.h = MAP_HEIGHT;
+    ruins.w = 15;
+    ruins.h = 30;
 }
 
 Map* get_active_map()
