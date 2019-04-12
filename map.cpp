@@ -256,6 +256,6 @@ void add_maze(int x, int y, const char* maze)
     for(int i = 0; i < 11*11; i++)
     {
         if(maze[i] == 'w')
-            add_wall(i % 11, i / 11, HORIZONTAL, 1);
+            add_wall(x + i % 11, y + i / 11, HORIZONTAL, 1);
     }
 }
