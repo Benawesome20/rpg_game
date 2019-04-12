@@ -175,9 +175,16 @@ void add_key(int x, int y);
  */
 void add_door(int x, int y, int open);
 
+
 /**
- * Add a ______ at (x,y). If there is already a MapItem at (x,y), erase it
- * before adding the _____.
+ * Add stairs at (x,y). If there is already a MapItem at (x,y), erase it
+ * before adding the stairs.
+ */
+void add_stairs(int x, int y,);
+
+/**
+ * Add a throne at (x,y). If there is already a MapItem at (x,y), erase it
+ * before adding the throne.
  */
 void add_win_item(int x, int y);
 
