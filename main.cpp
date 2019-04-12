@@ -6,6 +6,7 @@
 #include "speech.h"
 
 // Functions in this file
+MapItem* next_to(int x, int y, int type, int on, int erase);
 int get_action (GameInputs inputs);
 int update_game (int action);
 void draw_game (int init);
@@ -25,6 +26,46 @@ struct {
     int has_key; // if the player is holding the key
     bool omni; // if omnipotent mode is turned on
 } Player;
+
+// Looks for a MapItem of the given type next to the x,y
+// and returns a pointer to it.
+// If on is true, look at the tile at x,y.
+// If erase is true, erase the tile it finds.
+MapItem* next_to(int x, int y, int type, int on, int erase)
+{
+    MapItem* up    = get_north(Player.x, Player.y);
+    MapItem* left  = get_west(Player.x, Player.y);
+    MapItem* right = get_east(Player.x, Player.y);
+    MapItem* down  = get_south(Player.x, Player.y);
+    MapItem* here  = get_here(Player.x, Player.y);
+    MapItem* output = NULL; //if no tile exists, return null
+
+    if(up->type == type)
+        output = up;
+    else if(left->type == type)
+        output = left;
+    else if(right->type == type)
+        output = right;
+    else if(down->type == type)
+        output = down;
+    else if(on && here->type == type)
+        output = here;
+    // if erase is on and the tile was found
+    if(erase && output) {
+        if(up->type == type)
+            map_erase(Player.x, Player.y - 1);
+        else if(left->type == type)
+            map_erase(Player.x - 1, Player.y);
+        else if(right->type == type)
+            map_erase(Player.x + 1, Player.y);
+        else if(down->type == type)
+            map_erase(Player.x, Player.y + 1);
+        else if(here->type == type)
+            map_erase(Player.x, Player.y);
+    }
+
+    return output;
+}
 
 /**
  * Given the game inputs, determine what kind of update needs to happen.
@@ -77,11 +118,6 @@ int update_game(int action)
     Player.py = Player.y;
 
     MapItem* nextTile;
-    MapItem* up;
-    MapItem* down;
-    MapItem* left;
-    MapItem* right;
-    MapItem* here;
 
     // Do different things based on the each action.
     // You can define functions like "go_up()" that get called for each case.
@@ -113,57 +149,63 @@ int update_game(int action)
             break;
         case ACTION_BUTTON:
             pc.printf("Action button\r\n");
-            up = get_north(Player.x, Player.y);
-            left = get_west(Player.x, Player.y);
-            right = get_east(Player.x, Player.y);
-            down = get_south(Player.x, Player.y);
-            here = get_here(Player.x, Player.y);
-
             // If you are standing next to an NPC
-            if(up->type == NPC || left->type == NPC || right->type == NPC || down->type == NPC) {
+            if(next_to(Player.x, Player.y, NPC, false, false)) {
                 pc.printf("NPC found\r\n");
-                const char* lines[] = {"Hello! This", "line is too long.","Have a good day!", "Goodbye", "Also, see ya"};
-               long_speech(lines, 5);
-               return FULL_DRAW;
+                const char* lines[][] = {{  "Wha... where am  ",
+                                            "I? Who are you?  ",
+                                            "No, wait... I'm  ",
+                                            "supposed to tell ",
+                                            "you something... ",
+                                            "There's a key    ",
+                                            "hidden in those  ",
+                                            "ruins over       ",
+                                            "there; it's the  ",
+                                            "only way to      ",
+                                            "escape...        ",
+                                            "How do I know    ",
+                                            "that?            "},
+
+                                         {  "You have to get  ",
+                                            "that key. I'm    ",
+                                            "not allowed to   ",
+                                            "leave this map.  "},
+
+                                         {  "Thank god, you   ",
+                                            "found it. There's",
+                                            "only one lock in ",
+                                            "this godforsaken ",
+                                            "place, it's just ",
+                                            "south of here.   ",
+                                            "You know the     ",
+                                            "place.           "},
+
+                                         {  "Please, end it.  "}};
+                if(
+                long_speech(lines[0], 13);
+                return FULL_DRAW;
             }
 
             // If you are standing on or next to a key, take it and erase it
-            if(up->type == KEY || left->type == KEY || right->type == KEY || down->type == KEY || here->type == KEY) {
+            if(next_to(Player.x, Player.y, KEY, true, true)) {
                 pc.printf("Key found\r\n");
                 Player.has_key = 1;
-
-                if(up->type == KEY)
-                    map_erase(Player.x, Player.y - 1);
-                else if(left->type == KEY)
-                    map_erase(Player.x - 1, Player.y);
-                else if(right->type == KEY)
-                    map_erase(Player.x + 1, Player.y);
-                else if(down->type == KEY)
-                    map_erase(Player.x, Player.y + 1);
-                else
-                    map_erase(Player.x, Player.y);
 
                 return FULL_DRAW;
             }
 
             // If you are standing next to a door with a key, open it
-            if(Player.has_key && (up->type == DOOR || left->type == DOOR || right->type == DOOR || down->type == DOOR)) {
+            MapItem* door = next_to(Player.x, Player.y, DOOR, false, false);
+            if(Player.has_key && (door)) {
                 pc.printf("Door opened\r\n");
-
-                if(up->type == DOOR)
-                    add_door(Player.x, Player.y - 1, 1);
-                else if(left->type == DOOR)
-                    add_door(Player.x - 1, Player.y, 1);
-                else if(right->type == DOOR)
-                    add_door(Player.x + 1, Player.y, 1);
-                else
-                    add_door(Player.x, Player.y + 1, 1);
+                door->walkable = true;
+                door->draw = draw_nothing; // change to actual sprite
 
                 return FULL_DRAW;
             }
 
             // If you are standing on or next to a win item, take it and win the game.
-            if(up->type == WIN_ITEM || left->type == WIN_ITEM || right->type == WIN_ITEM || down->type == WIN_ITEM || here->type == WIN_ITEM) {
+            if(next_to(Player.x, Player.y, WIN_ITEM, true, false) {
                 pc.printf("Win item taken\r\n");
 
                 return GAME_OVER_WIN;
@@ -261,7 +303,9 @@ void init_main_map()
     Map* map = set_active_map(0);
     for(int i = map_width() + 3; i < map_area(); i += 39)
     {
-        add_plant(i % map_width(), i / map_width());
+        // Make sure there are no plants in the building
+        if(i % map_width() <= 16 && i % map_width >= 35 && i / map_width() <= 27 && i / map_width() >= 40)
+            add_plant(i % map_width(), i / map_width());
     }
     pc.printf("plants\r\n");
 
@@ -282,7 +326,7 @@ void init_main_map()
     add_wall(16,            28,              VERTICAL,   12);
     add_wall(35,            27,              VERTICAL,   13);
     add_wall(16,            40,              HORIZONTAL, 20);
-    
+
     pc.printf("Walls done!\r\n");
 
     add_NPC(24, 22);

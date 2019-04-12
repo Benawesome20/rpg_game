@@ -44,7 +44,7 @@ void erase_speech_bubble()
 void draw_speech_line(const char* line, int which)
 {
     // who decided that text_string should have arbitrary rows and cols??
-    // 16 character max
+    // 17 character max
     uLCD.text_string((char*) line, 1, 12 + which, FONT_5X7, YELLOW);
 }
 
