@@ -277,18 +277,18 @@ void init_main_map()
     add_wall(27,            24,              VERTICAL,   4);
     add_wall(24,            27,              HORIZONTAL, 3);
     // Throne building
-    add_wall(15,            27,              HORIZONTAL, 7);
+    add_wall(16,            27,              HORIZONTAL, 7);
     add_wall(28,            27,              HORIZONTAL, 7);
-    add_wall(15,            28,              VERTICAL,   12);
-    add_wall(35,            28,              VERTICAL,   12);
-    add_wall(15,            40,              HORIZONTAL, 12);
+    add_wall(16,            28,              VERTICAL,   12);
+    add_wall(35,            27,              VERTICAL,   13);
+    add_wall(16,            40,              HORIZONTAL, 20);
     
     pc.printf("Walls done!\r\n");
 
-    add_NPC(24, 28);
+    add_NPC(24, 22);
     add_key(5, 3);
-    add_door(7, 5, 0);
-    add_win_item(25, 17);
+    add_door(25, 40, 0);
+    add_win_item(25, 33);
     pc.printf("NPC, key, and door added\r\n");
 
     print_map();
