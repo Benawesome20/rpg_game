@@ -174,7 +174,7 @@ void add_plant(int x, int y)
 
 void add_NPC(int x, int y, int state)
 {
-    int s = state;
+    static int s = state;
     MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
     w1->type = NPC;
     w1->draw = draw_NPC;
