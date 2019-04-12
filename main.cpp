@@ -15,7 +15,11 @@ int main ();
 
 // Constants
 #define NO_ACTION_LIMIT 200 // Accelerometer sensitivity limit required for movement
-
+// NPC states
+#define START 0
+#define GO    1
+#define FOUND 2
+#define END   3
 /**
  * The main game state. Must include Player locations and previous locations for
  * drawing to work properly. Other items can be added as needed.
@@ -150,39 +154,55 @@ int update_game(int action)
         case ACTION_BUTTON:
             pc.printf("Action button\r\n");
             // If you are standing next to an NPC
-            if(next_to(Player.x, Player.y, NPC, false, false)) {
+            MapItem* npc = next_to(Player.x, Player.y, NPC, false, false);
+            if(npc) {
                 pc.printf("NPC found\r\n");
-                const char* lines[][] = {{  "Wha... where am  ",
-                                            "I? Who are you?  ",
-                                            "No, wait... I'm  ",
-                                            "supposed to tell ",
-                                            "you something... ",
-                                            "There's a key    ",
-                                            "hidden in those  ",
-                                            "ruins over       ",
-                                            "there; it's the  ",
-                                            "only way to      ",
-                                            "escape...        ",
-                                            "How do I know    ",
-                                            "that?            "},
-
-                                         {  "You have to get  ",
-                                            "that key. I'm    ",
-                                            "not allowed to   ",
-                                            "leave this map.  "},
-
-                                         {  "Thank god, you   ",
-                                            "found it. There's",
-                                            "only one lock in ",
-                                            "this godforsaken ",
-                                            "place, it's just ",
-                                            "south of here.   ",
-                                            "You know the     ",
-                                            "place.           "},
-
-                                         {  "Please, end it.  "}};
-                if(
-                long_speech(lines[0], 13);
+                const char* lines[];
+                int length;
+                if(npc->data && *npc->data == START) {
+                    lines = { "Wha... where am  ",
+                              "I? Who are you?  ",
+                              "No, wait... I'm  ",
+                              "supposed to tell ",
+                              "you something... ",
+                              "There's a key    ",
+                              "hidden in those  ",
+                              "ruins over       ",
+                              "there; it's the  ",
+                              "only way to      ",
+                              "escape...        ",
+                              "How do I know    ",
+                              "that?            "};
+                    length = 13;
+                }
+                else if(*npc->data == GO) {
+                    lines = { "You have to get  ",
+                              "that key. I'm    ",
+                              "not allowed to   ",
+                              "leave this map.  "};
+                    length = 4;
+                }
+                else if(*npc->data == FOUND) {
+                    lines = { "Thank god, you   ",
+                              "found it. There's",
+                              "only one lock in ",
+                              "this godforsaken ",
+                              "place, it's just ",
+                              "south of here.   ",
+                              "You know the     ",
+                              "place.           "};
+                    length = 8;
+                }
+                else if(*npc->data == END) {
+                    lines = { "Please, end it.  "};
+                    length = 1;
+                }
+                else {
+                    lines = { "YOU SHOULDN'T BE",
+                              "HERE.           "};
+                    length = 2;
+                }
+                long_speech((char*)lines, length);
                 return FULL_DRAW;
             }
 
@@ -329,7 +349,7 @@ void init_main_map()
 
     pc.printf("Walls done!\r\n");
 
-    add_NPC(24, 22);
+    add_NPC(24, 22, START);
     add_key(5, 3);
     add_door(25, 40, 0);
     add_win_item(25, 33);

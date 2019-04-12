@@ -38,7 +38,7 @@ typedef struct {
     /**
      * Arbitrary extra data for the MapItem. Could be useful for keeping up with
      * special information, like where a set of stairs should take the player.
-     * 
+     *
      * Iterpretation of this can depend on the type of the MapItem. For example,
      * a WALL probably doesn't need to use this (it can be NULL), where an NPC
      * might use it to store game state (have I given the player the key yet?).
@@ -157,10 +157,10 @@ void add_wall(int x, int y, int dir, int len);
 void add_plant(int x, int y);
 
 /**
- * Add an NPC item at (x,y). If there is already a MapItem at (x,y), erase it
+ * Add an NPC item at (x,y) with a certain state. If there is already a MapItem at (x,y), erase it
  * before adding the NPC.
  */
-void add_NPC(int x, int y);
+void add_NPC(int x, int y, int state);
 
 /**
  * Add a key item at (x,y). If there is already a MapItem at (x,y), erase it
