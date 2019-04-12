@@ -53,7 +53,7 @@ void draw_plant(int u, int v)
 
 void draw_NPC(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, RED); // change to sprite
+    uLCD.filled_rectangle(u, v, u+10, v+10, RED); //TODO: change to sprite
 }
 
 void draw_key(int u, int v)
@@ -63,12 +63,17 @@ void draw_key(int u, int v)
 
 void draw_door(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, BROWN); // change to sprite
+    uLCD.filled_rectangle(u, v, u+10, v+10, BROWN); //TODO: change to sprite
+}
+
+void draw_stairs(int u, int v)
+{
+    uLCD.filled_rectangle(u, v, u+10, v+10, DGREY); //TODO: change to sprite
 }
 
 void draw_win_item(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); // change to sprite
+    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); //TODO: change to sprite
 }
 
 void draw_upper_status(int player_x, int player_y)

@@ -22,6 +22,7 @@ struct Map {
  * is static.
  */
 static Map map;
+static Map ruins;
 static int active_map;
 
 /**
@@ -51,21 +52,33 @@ void maps_init()
 {
     // Initialize hash table
     map.items = createHashTable(map_hash, NUM_TILES);
+    ruins.items = createHashTable(map_hash, NUM_TILES);
     // Set width & height
     map.w = MAP_WIDTH;
     map.h = MAP_HEIGHT;
+    ruins.w = MAP_WIDTH;
+    ruins.h = MAP_HEIGHT;
 }
 
 Map* get_active_map()
 {
-    // There's only one map
-    return &map;
+    if(active_map == 0)
+        return &map;
+    else if(active_map == 1)
+        return &ruins;
+    else
+        return &map; //default to map
 }
 
 Map* set_active_map(int m)
 {
     active_map = m;
-    return &map;
+    if(active_map == 0)
+        return &map;
+    else if(active_map == 1)
+        return &ruins;
+    else
+        return NULL;
 }
 
 void print_map()
@@ -86,17 +99,17 @@ void print_map()
 
 int map_width()
 {
-    return map.w;
+    return get_active_map().w;
 }
 
 int map_height()
 {
-    return map.h;
+    return get_active_map().h;
 }
 
 int map_area()
 {
-    return map.w * map.h;
+    return get_active_map().w * get_active_map().h;
 }
 
 MapItem* get_north(int x, int y)
@@ -104,23 +117,23 @@ MapItem* get_north(int x, int y)
     // Check if there is no northern tile
     if(y <= 0)
         return NULL;
-    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y - 1)));
+    return (MapItem*) getItem(get_active_map().items, map_hash(XY_KEY(x, y - 1)));
 }
 
 MapItem* get_south(int x, int y)
 {
     // Check if there is no southern tile
-    if(y >= map.h - 1)
+    if(y >= get_active_map().h - 1)
         return NULL;
-    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y + 1)));
+    return (MapItem*) getItem(get_active_map().items, map_hash(XY_KEY(x, y + 1)));
 }
 
 MapItem* get_east(int x, int y)
 {
     // Check if there is no eastern tile
-    if(x >= map.w - 1)
+    if(x >= get_active_map().w - 1)
         return NULL;
-    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x + 1, y)));
+    return (MapItem*) getItem(get_active_map().items, map_hash(XY_KEY(x + 1, y)));
 }
 
 MapItem* get_west(int x, int y)
@@ -128,14 +141,14 @@ MapItem* get_west(int x, int y)
     // Check if there is no western tile
     if(x <= 0)
         return NULL;
-    return (MapItem*) getItem(map.items, map_hash(XY_KEY(x - 1, y)));
+    return (MapItem*) getItem(get_active_map().items, map_hash(XY_KEY(x - 1, y)));
 }
 
 MapItem* get_here(int x, int y)
 {
     // Check if tile is on map
-    if(x > -1 && x < map.w && y > -1 && y < map.h)
-        return (MapItem*) getItem(map.items, map_hash(XY_KEY(x, y)));
+    if(x > -1 && x < get_active_map().w && y > -1 && y < get_active_map().h)
+        return (MapItem*) getItem(get_active_map().items, map_hash(XY_KEY(x, y)));
     else
         return NULL;
 }
@@ -143,7 +156,7 @@ MapItem* get_here(int x, int y)
 
 void map_erase(int x, int y)
 {
-    deleteItem(map.items, map_hash(XY_KEY(x, y)));
+    deleteItem(get_active_map().items, map_hash(XY_KEY(x, y)));
 }
 
 void add_wall(int x, int y, int dir, int len)

@@ -32,6 +32,7 @@ void draw_plant(int u, int v);
 void draw_NPC(int u, int v);
 void draw_key(int u, int v);
 void draw_door(int u, int v);
+void draw_stairs(int u, int v);
 void draw_win_item(int u, int v);
 
 /**
