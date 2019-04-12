@@ -342,7 +342,7 @@ void init_main_map()
     for(int i = map_width() + 3; i < map_area(); i += 39)
     {
         // Make sure there are no plants in the building
-        if(i % map_width() <= 16 && i % map_width() >= 35 && i / map_width() <= 27 && i / map_width() >= 40)
+        if(!(i % map_width() > 16 && i % map_width() < 35 && i / map_width() > 27 && i / map_width() < 40))
             add_plant(i % map_width(), i / map_width());
     }
     pc.printf("plants\r\n");
