@@ -44,7 +44,7 @@ static unsigned XY_KEY(int X, int Y) {
  */
 unsigned map_hash(unsigned key)
 {
-    unsigned hash_value = key % (map_width);
+    unsigned hash_value = key % (map_width());
     return hash_value;
 }
 
