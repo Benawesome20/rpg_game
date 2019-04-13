@@ -202,6 +202,7 @@ void add_NPC(int x, int y, int* state)
     w1->draw = draw_NPC;
     w1->walkable = false;
     w1->data = state;
+    pc.printf("NPC created with data %u\r\n", *((int*)w1->data));
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
@@ -235,6 +236,7 @@ void add_stairs(int x, int y, int* map)
     w1->draw = draw_stairs;
     w1->walkable = true;
     w1->data = map; //data points to the map the stairs lead to
+    pc.printf("NPC created with data %u\r\n", *((int*)w1->data));
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }

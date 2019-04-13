@@ -376,7 +376,7 @@ void init_main_map()
     add_wall(13,             28,             HORIZONTAL, 1);
     add_wall(1,              28,             HORIZONTAL, 1);
     add_maze(2, 17, maze1);
-    int map1 = 0;
+    static int map1 = 0;
     add_stairs(7, 28, &map1);
     add_key(7,3);
     print_map();
@@ -411,12 +411,12 @@ void init_main_map()
 
     pc.printf("Walls done on main!\r\n");
 
-    int state = START;
+    static int state = START;
     add_NPC(24, 22, &state);
     //add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
-    int map2 = 1;
+    static int map2 = 1;
     add_stairs(22, 26, &map2);
     pc.printf("NPC, key, and door added on main\r\n");
 

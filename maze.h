@@ -20,6 +20,6 @@ const char* maze2 =
 "w w     w w"
 "wwwwwww w w"
 "w   w   w w"
-"w www w w w"
+"w www www w"
 "w     w   w"
 "wwwww wwwww";
