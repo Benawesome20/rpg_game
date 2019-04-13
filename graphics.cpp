@@ -10,9 +10,9 @@
 void draw_player(int u, int v, int key)
 {
     if(!key)
-        uLCD.BLIT(u, v, 11, 11, sprite_frames[2]);
+        uLCD.BLIT(u, v, 11, 11, sprite_frames[5]);
     else
-        uLCD.BLIT(u, v, 11, 11, sprite_frames[3]);
+        uLCD.BLIT(u, v, 11, 11, sprite_frames[6]);
 }
 
 #define YELLOW 0xFFFF00
@@ -43,7 +43,7 @@ void draw_nothing(int u, int v)
 
 void draw_wall(int u, int v)
 {
-    uLCD.BLIT(u, v, 11, 11, sprite_frames[4]);
+    uLCD.BLIT(u, v, 11, 11, sprite_frames[8]);
 }
 
 void draw_plant(int u, int v)
@@ -53,27 +53,32 @@ void draw_plant(int u, int v)
 
 void draw_NPC(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, RED); //TODO: change to sprite
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[4]);
 }
 
 void draw_key(int u, int v)
 {
-    uLCD.BLIT(u, v, 11, 11, sprite_frames[1]);
+    uLCD.BLIT(u, v, 11, 11, sprite_frames[3]);
 }
 
-void draw_door(int u, int v)
+void draw_door_closed(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, BROWN); //TODO: change to sprite
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[1]);
+}
+
+void draw_door_open(int u, int v)
+{
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[2]);
 }
 
 void draw_stairs(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, DGREY); //TODO: change to sprite
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[7]);
 }
 
 void draw_win_item(int u, int v)
 {
-    uLCD.filled_rectangle(u, v, u+10, v+10, BLUE); //TODO: change to sprite
+    uLCD.BLIT(u , v, 11, 11, sprite_frames[9]);
 }
 
 void draw_upper_status(int player_x, int player_y)
