@@ -246,7 +246,7 @@ int update_game(int action)
             if(Player.has_key && (door)) {
                 pc.printf("Door opened\r\n");
                 door->walkable = true;
-                door->draw = draw_nothing; // change to actual sprite
+                door->draw = draw_door_closed;
 
                 return FULL_DRAW;
             }
