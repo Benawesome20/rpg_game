@@ -195,14 +195,13 @@ void add_plant(int x, int y)
     if (val) free(val); // If something is already there, free it
 }
 
-void add_NPC(int x, int y, int state)
+void add_NPC(int x, int y, int* state)
 {
-    static int s = state;
     MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
     w1->type = NPC;
     w1->draw = draw_NPC;
     w1->walkable = false;
-    w1->data = &s;
+    w1->data = state;
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
@@ -229,14 +228,13 @@ void add_door(int x, int y, int open)
     if (val) free(val); // If something is already there, free it
 }
 
-void add_stairs(int x, int y, int map)
+void add_stairs(int x, int y, int* map)
 {
-    static int m = map;
     MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
     w1->type = STAIRS;
     w1->draw = draw_stairs;
     w1->walkable = true;
-    w1->data = &map; //data points to the map the stairs lead to
+    w1->data = map; //data points to the map the stairs lead to
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }

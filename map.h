@@ -160,7 +160,7 @@ void add_plant(int x, int y);
  * Add an NPC item at (x,y) with a certain state. If there is already a MapItem at (x,y), erase it
  * before adding the NPC.
  */
-void add_NPC(int x, int y, int state);
+void add_NPC(int x, int y, int* state);
 
 /**
  * Add a key item at (x,y). If there is already a MapItem at (x,y), erase it
@@ -180,7 +180,7 @@ void add_door(int x, int y, int open);
  * Add stairs at (x,y) to map map. If there is already a MapItem at (x,y), erase it
  * before adding the stairs.
  */
-void add_stairs(int x, int y, int map);
+void add_stairs(int x, int y, int* map);
 
 /**
  * Add a throne at (x,y). If there is already a MapItem at (x,y), erase it

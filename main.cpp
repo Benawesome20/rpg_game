@@ -231,7 +231,7 @@ int update_game(int action)
                 pc.printf("Key found\r\n");
 
                 // if you're in the ruins, swap the mazes
-                if(get_active_map() == 1) {
+                if(get_active_map() == get_map(1)) {
                     remove_maze(2, 17, maze1);
                     add_maze(2, 17, maze2);
                     pc.printf("Maze shifted\r\n");
@@ -376,7 +376,8 @@ void init_main_map()
     add_wall(13,             28,             HORIZONTAL, 1);
     add_wall(1,              28,             HORIZONTAL, 1);
     add_maze(2, 17, maze1);
-    add_stairs(7, 28, 0);
+    int map1 = 0;
+    add_stairs(7, 28, &map1);
     add_key(7,3);
     print_map();
 
@@ -410,11 +411,13 @@ void init_main_map()
 
     pc.printf("Walls done on main!\r\n");
 
-    add_NPC(24, 22, START);
+    int state = START;
+    add_NPC(24, 22, &state);
     //add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
-    //add_stairs(22, 26, 1);
+    int map2 = 1;
+    add_stairs(22, 26, &map2);
     pc.printf("NPC, key, and door added on main\r\n");
 
     print_map();
