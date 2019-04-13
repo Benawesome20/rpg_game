@@ -193,4 +193,9 @@ void add_win_item(int x, int y);
  */
 void add_maze(int x, int y, const char* maze);
 
+/**
+ * Removes the walls that make up the maze at (x,y).
+ */
+void remove_maze(int x, int y, const char* maze);
+
 #endif //MAP_H

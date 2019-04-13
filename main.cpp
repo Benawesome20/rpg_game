@@ -174,13 +174,14 @@ int update_game(int action)
                                             "you something... ",
                                             "There's a key    ",
                                             "hidden in those  ",
-                                            "ruins over       ",
-                                            "there; it's the  ",
-                                            "only way to      ",
-                                            "escape...        ",
-                                            "How do I know    ",
-                                            "that?            "};
-                    long_speech(lines, 13);
+                                            "shifting ruins   ",
+                                            "just south of    ",
+                                            "here; take the   ",
+                                            "stairs down. It's",
+                                            "the only way to  ",
+                                            "escape... How do ",
+                                            "I know that?     "};
+                    long_speech(lines, 14);
 
                     // set the NPC to say the next lines
                     static int next = GO;
@@ -228,6 +229,13 @@ int update_game(int action)
             // If you are standing on or next to a key, take it and erase it
             if(next_to(Player.x, Player.y, KEY, true, true)) {
                 pc.printf("Key found\r\n");
+
+                // if you're in the ruins, swap the mazes
+                if(get_active_map() == 1) {
+                    remove_maze(2, 17, maze1);
+                    add_maze(2, 17, maze2);
+                    pc.printf("Maze shifted\r\n");
+                }
                 Player.has_key = 1;
 
                 return FULL_DRAW;
@@ -251,11 +259,21 @@ int update_game(int action)
             }
 
             // If you are standing on or next to stairs, go to their map.
-            if(next_to(Player.x, Player.y, STAIRS, true, false)) {
+            nextTile = next_to(Player.x, Player.y, STAIRS, true, false);
+            if(nextTile) {
                 pc.printf("Going down stairs\r\n");
-                set_active_map(1);
-                Player.x = 7;
-                Player.y = 28;
+                int map_num = *((int*)nextTile->data);
+                set_active_map(map_num);
+                if(map_num == 1) {
+                    Player.x = 7;
+                    Player.y = 28;
+                }
+                else if(map_num == 0) {
+                    Player.x = 22;
+                    Player.y = 26;
+                }
+                else
+                    Player.x = Player.y = 25; // just in case
                 return FULL_DRAW;
             }
             break;
@@ -353,7 +371,13 @@ void init_main_map()
     add_wall(0,              map_height()-1, HORIZONTAL, map_width());
     add_wall(0,              0,              VERTICAL,   map_height());
     add_wall(map_width()-1,  0,              VERTICAL,   map_height());
+    add_wall(1,              17,             HORIZONTAL, 1);
+    add_wall(13,             17,             HORIZONTAL, 1);
+    add_wall(13,             28,             HORIZONTAL, 1);
+    add_wall(1,              28,             HORIZONTAL, 1);
     add_maze(2, 17, maze1);
+    add_stairs(7, 28, 0);
+    add_key(7,3);
     print_map();
 
     // "Random" plants
@@ -387,10 +411,10 @@ void init_main_map()
     pc.printf("Walls done on main!\r\n");
 
     add_NPC(24, 22, START);
-    add_key(24, 20);
+    //add_key(24, 20);
     add_door(25, 40, 0);
     add_win_item(25, 33);
-    add_stairs(24, 18, 1);
+    //add_stairs(22, 26, 1);
     pc.printf("NPC, key, and door added on main\r\n");
 
     print_map();

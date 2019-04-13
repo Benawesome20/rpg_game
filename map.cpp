@@ -231,11 +231,12 @@ void add_door(int x, int y, int open)
 
 void add_stairs(int x, int y, int map)
 {
+    static int m = map;
     MapItem* w1 = (MapItem*) malloc(sizeof(MapItem));
     w1->type = STAIRS;
     w1->draw = draw_stairs;
     w1->walkable = true;
-    w1->data = get_map(map); //data points to the map the stairs lead to
+    w1->data = &map; //data points to the map the stairs lead to
     void* val = insertItem(get_active_map()->items, XY_KEY(x, y), w1);
     if (val) free(val); // If something is already there, free it
 }
@@ -257,5 +258,14 @@ void add_maze(int x, int y, const char* maze)
     {
         if(maze[i] == 'w')
             add_wall(x + i % 11, y + i / 11, HORIZONTAL, 1);
+    }
+}
+
+void remove_maze(int x, int y, const char* maze)
+{
+    for(int i = 0; i < 11*11; i++)
+    {
+        if(maze[i] == 'w')
+            map_erase(x + i % 11, y + i / 11);
     }
 }
