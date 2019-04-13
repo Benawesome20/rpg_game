@@ -4,15 +4,13 @@
 
 #include "frames.h"
 
-#include "test_frames.h"
-
 #include "hardware.h"
 
 
 void draw_player(int u, int v, int key)
 {
     if(!key)
-        uLCD.BLIT(u, v, 11, 11, test_frames[0]//sprite_frames[2]);
+        uLCD.BLIT(u, v, 11, 11, sprite_frames[2]);
     else
         uLCD.BLIT(u, v, 11, 11, sprite_frames[3]);
 }
