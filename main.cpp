@@ -136,8 +136,8 @@ int update_game(int action)
     if(action)
         walk_counter += 1;
 
-    // If the walk counter has reached 5, move the NPC in a random direction
-    if(walk_counter >= 5) {
+    // If the walk counter has reached 5 and we're in the main map, move the NPC in a random direction
+    if(walk_counter >= 5 && get_active_map() == get_map(0)) {
         pc.printf("Starting NPC move\r\n");
         // save the old NPC spot
         int NPC_px = NPC_x;
