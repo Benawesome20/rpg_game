@@ -32,10 +32,11 @@ struct {
     bool omni; // if omnipotent mode is turned on
 } Player;
 
-// NPC walk counter and coordinates
+// NPC walk counter, coordinates, and state
 static int walk_counter = 0;
 static int NPC_x = 24;
 static int NPC_y = 22;
+static int state = START;
 
 // Looks for a MapItem of the given type next to the x,y
 // and returns a pointer to it.
@@ -129,8 +130,11 @@ int update_game(int action)
 
     MapItem* nextTile;
 
-    // If the walk counter has reached 3, move the NPC in a random direction
-    if(walk_counter >= 3) {
+    // If the walk counter has reached 5, move the NPC in a random direction
+    if(walk_counter >= 5) {
+        // save the old NPC spot
+        int NPC_px = NPC_x;
+        int NPC_py = NPC_y;
         do {
             int dir = rand() % 5 // move in the 4 directions or stay still
             switch(dir) {
@@ -173,6 +177,9 @@ int update_game(int action)
             }
         // loop if nextTile does not exist or it is not walkable.
         }while(!nextTile || !nextTile->walkable);
+    // Update the NPC's location
+    map_remove(NPC_px, NPC_py);
+    add_NPC(NPC_x, NPC_y, &state);
     // Finally, reset the walk counter
     walk_counter = 0;
     }
@@ -464,7 +471,6 @@ void init_main_map()
 
     pc.printf("Walls done on main!\r\n");
 
-    static int state = START;
     add_NPC(24, 22, &state);
     //add_key(24, 20);
     add_door(25, 40, 0);

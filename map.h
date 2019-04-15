@@ -141,6 +141,12 @@ MapItem* get_here(int x, int y);
 void map_erase(int x, int y);
 
 /**
+ * If there is a MapItem at (x,y), remove it from the map and return its value.
+ */
+void* map_remove(int x, int y);
+
+
+/**
  * Add WALL items in a line of length len beginning at (x,y).
  * If dir == HORIZONTAL, the line is in the direction of increasing x.
  * If dir == VERTICAL, the line is in the direction of increasing y.

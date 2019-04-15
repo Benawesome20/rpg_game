@@ -169,6 +169,11 @@ void map_erase(int x, int y)
     deleteItem(get_active_map()->items, XY_KEY(x, y));
 }
 
+void* map_remove(int x, int y)
+{
+    return removeItem(get_active_map()->items, XY_KEY(x,y));
+}
+
 void add_wall(int x, int y, int dir, int len)
 {
     for(int i = 0; i < len; i++)
