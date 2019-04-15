@@ -280,7 +280,7 @@ int update_game(int action)
 
                     // set the NPC to say the next lines
                     state = END;
-                    npc->data = &state
+                    npc->data = &state;
                     return FULL_DRAW;
                 }
                 else if(npc->data && *((int*)npc->data) == END) {
