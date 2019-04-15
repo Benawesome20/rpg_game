@@ -147,7 +147,7 @@ int update_game(int action)
                 // move up
                 case 1:
                     nextTile = get_north(NPC_x, NPC_y);
-                    if(nextTile && nextTile->walkable)
+                    if(!nextTile || nextTile->walkable) // move if nextTile does not exist or is walkable
                         NPC_y -= 1;
                     else
                         continue;
@@ -155,7 +155,7 @@ int update_game(int action)
                 // move right
                 case 2:
                     nextTile = get_east(NPC_x, NPC_y);
-                    if(nextTile && nextTile->walkable)
+                    if(!nextTile || nextTile->walkable)
                         NPC_x += 1;
                     else
                         continue;
@@ -163,7 +163,7 @@ int update_game(int action)
                 // move down
                 case 3:
                     nextTile = get_south(NPC_x, NPC_y);
-                    if(nextTile && nextTile->walkable)
+                    if(!nextTile || nextTile->walkable)
                         NPC_y += 1;
                     else
                         continue;
@@ -171,7 +171,7 @@ int update_game(int action)
                 // move left
                 case 4:
                     nextTile = get_north(NPC_x, NPC_y);
-                    if(nextTile && nextTile->walkable)
+                    if(!nextTile || nextTile->walkable)
                         NPC_y -= 1;
                     else
                         continue;
@@ -181,8 +181,8 @@ int update_game(int action)
                     nextTile = get_here(NPC_x, NPC_y);
                     break;
             }
-        // loop if nextTile does not exist or it is not walkable.
-        }while(!nextTile || !nextTile->walkable);
+        // loop if nextTile exists and is not walkable.
+        }while(nextTile && !nextTile->walkable);
     // Update the NPC's location
     map_remove(NPC_px, NPC_py);
     add_NPC(NPC_x, NPC_y, &state);
@@ -198,25 +198,25 @@ int update_game(int action)
         case GO_UP:
             pc.printf("Up\r\n");
             nextTile = get_north(Player.x, Player.y);
-            if(Player.omni || nextTile->walkable) //if omni is on or the next tile is walkable
+            if(Player.omni || !nextTile || nextTile->walkable) //if omni is on or the next tile doesn't exist or the next tile is walkable
                 Player.y -= 1;
             break;
         case GO_LEFT:
             pc.printf("Left\r\n");
             nextTile = get_west(Player.x, Player.y);
-            if(Player.omni || nextTile->walkable)
+            if(Player.omni || !nextTile || nextTile->walkable)
                 Player.x -= 1;
             break;
         case GO_DOWN:
             pc.printf("Down\r\n");
             nextTile = get_south(Player.x, Player.y);
-            if(Player.omni || nextTile->walkable)
+            if(Player.omni || !nextTile || nextTile->walkable)
                 Player.y += 1;
             break;
         case GO_RIGHT:
             pc.printf("Right\r\n");
             nextTile = get_east(Player.x, Player.y);
-            if(Player.omni || nextTile->walkable)
+            if(Player.omni || !nextTile || nextTile->walkable)
                 Player.x += 1;
             break;
         case ACTION_BUTTON:
