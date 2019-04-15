@@ -130,6 +130,8 @@ int update_game(int action)
 
     MapItem* nextTile;
 
+    bool full_draw = false;
+
     // if the player is actually doing something, increase the npc walk counter
     if(action)
         walk_counter += 1;
@@ -187,8 +189,9 @@ int update_game(int action)
     map_remove(NPC_px, NPC_py);
     add_NPC(NPC_x, NPC_y, &state);
     pc.printf("NPC removed and added\r\n");
-    // Finally, reset the walk counter
+    // Finally, reset the walk counter and make sure to return a full draw
     walk_counter = 0;
+    full_draw = true;
     }
 
     // Do different things based on the each action.
@@ -229,8 +232,8 @@ int update_game(int action)
 
                 // set the NPC to say the correct lines if the player has the key
                 if(npc->data && Player.has_key == true && *((int*)npc->data) == GO) {
-                    static int next = FOUND;
-                    npc->data = &next;
+                    state = FOUND;
+                    npc->data = &state;
                 }
 
                 if(npc->data && *((int*)npc->data) == START) {
@@ -251,8 +254,8 @@ int update_game(int action)
                     long_speech(lines, 14);
 
                     // set the NPC to say the next lines
-                    static int next = GO;
-                    npc->data = &next;
+                    state = GO;
+                    npc->data = &state;
                     return FULL_DRAW;
                 }
                 else if(npc->data && *((int*)npc->data) == GO) {
@@ -276,8 +279,8 @@ int update_game(int action)
                     long_speech(lines, 8);
 
                     // set the NPC to say the next lines
-                    static int next = END;
-                    npc->data = &next;
+                    state = END;
+                    npc->data = &state
                     return FULL_DRAW;
                 }
                 else if(npc->data && *((int*)npc->data) == END) {
@@ -354,6 +357,8 @@ int update_game(int action)
         default:
             break;
     }
+    if(full_draw)
+        return FULL_DRAW;
     return NO_RESULT;
 }
 
