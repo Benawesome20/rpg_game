@@ -32,6 +32,11 @@ struct {
     bool omni; // if omnipotent mode is turned on
 } Player;
 
+// NPC walk counter and coordinates
+static int walk_counter = 0;
+static int NPC_x = 24;
+static int NPC_y = 22;
+
 // Looks for a MapItem of the given type next to the x,y
 // and returns a pointer to it.
 // If on is true, look at the tile at x,y.
@@ -123,6 +128,54 @@ int update_game(int action)
     Player.py = Player.y;
 
     MapItem* nextTile;
+
+    // If the walk counter has reached 3, move the NPC in a random direction
+    if(walk_counter >= 3) {
+        do {
+            int dir = rand() % 5 // move in the 4 directions or stay still
+            switch(dir) {
+                // move up
+                case 1:
+                    nextTile = get_north(NPC_x, NPC_y);
+                    if(nextTile && nextTile->walkable)
+                        NPC_y -= 1;
+                    else
+                        continue;
+                    break;
+                // move right
+                case 2:
+                    nextTile = get_east(NPC_x, NPC_y);
+                    if(nextTile && nextTile->walkable)
+                        NPC_x += 1;
+                    else
+                        continue;
+                    break;
+                // move down
+                case 3:
+                    nextTile = get_south(NPC_x, NPC_y);
+                    if(nextTile && nextTile->walkable)
+                        NPC_y += 1;
+                    else
+                        continue;
+                    break;
+                // move left
+                case 4:
+                    nextTile = get_north(NPC_x, NPC_y);
+                    if(nextTile && nextTile->walkable)
+                        NPC_y -= 1;
+                    else
+                        continue;
+                    break;
+                // stay still
+                default:
+                    nextTile = get_here(NPC_x, NPC_y);
+                    break;
+            }
+        // loop if nextTile does not exist or it is not walkable.
+        }while(!nextTile || !nextTile->walkable);
+    // Finally, reset the walk counter
+    walk_counter = 0;
+    }
 
     // Do different things based on the each action.
     // You can define functions like "go_up()" that get called for each case.
