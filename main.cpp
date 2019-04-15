@@ -130,13 +130,19 @@ int update_game(int action)
 
     MapItem* nextTile;
 
+    // if the player is actually doing something, increase the npc walk counter
+    if(action)
+        walk_counter += 1;
+
     // If the walk counter has reached 5, move the NPC in a random direction
     if(walk_counter >= 5) {
+        pc.printf("Starting NPC move\r\n");
         // save the old NPC spot
         int NPC_px = NPC_x;
         int NPC_py = NPC_y;
         do {
-            int dir = rand() % 5 // move in the 4 directions or stay still
+            int dir = rand() % 5; // move in the 4 directions or stay still
+            pc.printf("Attempting to move in: %u\r\n", dir);
             switch(dir) {
                 // move up
                 case 1:
@@ -180,6 +186,7 @@ int update_game(int action)
     // Update the NPC's location
     map_remove(NPC_px, NPC_py);
     add_NPC(NPC_x, NPC_y, &state);
+    pc.printf("NPC removed and added\r\n");
     // Finally, reset the walk counter
     walk_counter = 0;
     }
